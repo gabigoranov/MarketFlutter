@@ -34,8 +34,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        home: AuthenticationWrapper(),
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        // Define the default brightness and colors.
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFFFFFFF),
+          primary: const Color(0xff5186c3),
+          background: const Color(0xffFAFAFA),
+        ),
+      ),
+      home: AuthenticationWrapper(),
     );
   }
 }
@@ -51,7 +60,6 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
-    print("MAtey");
     return Navigation();
   }
 }

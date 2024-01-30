@@ -25,7 +25,6 @@ final class UserService {
   }
 
   Future<void> fetchUser(String email, String password) async{
-    //TODO: FIX
     final url = 'https://localhost:7175/api/Users/login?email=$email&password=$password';
     Response<dynamic> response = await dio.get(url);
     User user =  User.fromJson(response.data);

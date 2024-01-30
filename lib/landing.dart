@@ -9,7 +9,7 @@ class Landing extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-        backgroundColor: const Color(0xff5186c3),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -36,8 +36,8 @@ class Landing extends StatelessWidget {
                             }),
                           );
                         },
-                        style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xffFAFAFA))),
-                        child: const Text("Log In", style: TextStyle(color: Color(0xff5186c3), fontSize: 24),),
+                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.background)),
+                        child: Text("Log In", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                       ),
                     ),
                     Padding(
@@ -50,8 +50,8 @@ class Landing extends StatelessWidget {
                             }),
                           );
                         },
-                        style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xffFAFAFA))),
-                        child: const Text("Register", style: TextStyle(color: Color(0xff5186c3), fontSize: 24),),
+                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.background)),
+                        child: Text("Register", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                       ),
                     ),
 

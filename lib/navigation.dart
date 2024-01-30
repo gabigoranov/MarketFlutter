@@ -34,7 +34,7 @@ class _NavigationState extends State<Navigation> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFFFFFFFF),
         type: BottomNavigationBarType.fixed,
-        selectedIconTheme: const IconThemeData(color: Color(0xff5186c3), size: 34),
+        selectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary, size: 34),
         selectedLabelStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
         selectedItemColor: Colors.black,
         currentIndex: _currentIndex,
