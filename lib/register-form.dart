@@ -28,7 +28,7 @@ class _LoginFormState extends State<RegisterForm> {
     TextEditingController _passwordController = TextEditingController();
 
     Future<void> registerUser(User user) async{
-      const url = 'https://localhost:7175/api/Users/add/';
+      const url = 'https://goranov.somee.com/api/Users/add/';
       //print(jsonEncode(user).toString());
       final response = await dio.post(url, data: jsonEncode(user));
       //print(response);

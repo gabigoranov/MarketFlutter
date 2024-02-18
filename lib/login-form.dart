@@ -33,7 +33,7 @@ class _LoginFormState extends State<LoginForm>{
 
           ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(32.0),
           child: Form(
             key: _formKey,
             child: Column(
