@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/authentication-wrapper.dart';
@@ -14,11 +16,18 @@ class MyHttpOverrides extends HttpOverrides{
   }
 }
 
-void main(){
-  HttpOverrides.global = MyHttpOverrides();
-  AndroidOptions _getAndroidOptions() => const AndroidOptions(
-    encryptedSharedPreferences: true,
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyB22nSiqPthWDIWt5XEtHXESXCzNNhecRU",
+        appId: "1:847650161276:android:82cabff8157ffc19437ff9",
+        messagingSenderId: "847650161276",
+        projectId: "market-229ca",
+        storageBucket: 'market-229ca.appspot.com',
+      )
   );
+
   runApp( MyApp() );
 }
 
