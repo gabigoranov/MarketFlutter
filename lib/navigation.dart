@@ -18,7 +18,7 @@ class _NavigationState extends State<Navigation> {
   PageController _pageController = PageController();
   int _currentIndex = 0;
   List<Widget> pages = [
-    ImageCapture(),
+    Soon(),
     Soon(),
     Soon(),
     Soon(),
