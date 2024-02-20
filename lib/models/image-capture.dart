@@ -17,15 +17,26 @@ class ImageCapture extends StatefulWidget {
 }
 
 class _ImageCaptureState extends State<ImageCapture> {
-  late File _imageFile;
-  Future<void> _pickImage() async{
-    final XFile? selected = await _picker.pickImage(
-      source: ImageSource.gallery
-    );
+  File? _imageFile;
 
-    setState(() {
-      _imageFile = File(selected!.path);
-    });
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> _pickImage() async{
+    try {
+      final imagePicker = ImagePicker();
+      final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        setState(() {
+          _imageFile = File(pickedFile.path);
+        });
+      }
+    } catch (e) {
+      // Handle any errors that occur during image picking
+      print('Error picking image: $e');
+    }
   }
 
   @override
@@ -36,11 +47,11 @@ class _ImageCaptureState extends State<ImageCapture> {
           TextButton(
             child: const Text("Upload"),
             onPressed: () async {
-              _pickImage();
+              await _pickImage();
               final storage = FirebaseStorage.instance;
               User userData = UserService.instance.user;
               final Reference ref = storage.ref().child('profiles/${userData.id}.jpg');
-              await ref.putFile(_imageFile);
+              await ref.putFile(_imageFile!);
             },
           ),
         ],
