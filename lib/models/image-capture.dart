@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:market/login-form.dart';
+import 'package:market/main.dart';
 import 'package:market/models/user-service.dart';
 import 'package:market/models/user.dart';
+import 'package:market/navigation.dart';
 
 final _picker = ImagePicker();
 
@@ -52,6 +55,11 @@ class _ImageCaptureState extends State<ImageCapture> {
               User userData = UserService.instance.user;
               final Reference ref = storage.ref().child('profiles/${userData.id}.jpg');
               await ref.putFile(_imageFile!);
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context){
+                  return Main();
+                }),
+              );
             },
           ),
         ],

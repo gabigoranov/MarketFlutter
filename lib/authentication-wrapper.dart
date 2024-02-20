@@ -21,7 +21,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     final String? read = await storage.read(key: "user_data");
     if(read != null){
       final json = await jsonDecode(read);
-      await UserService.instance.fetchUser(json[0], json[1]);
+      await UserService.instance.fetchUser(json[0], json[1]); //maybe remove
       isAuthenticated = true;
     }
   }
