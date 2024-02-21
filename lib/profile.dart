@@ -39,20 +39,23 @@ class _ProfileState extends State<Profile> {
                     maxHeight: 350,
                     //maximum width set to 100% of width
                   ),
-                  child: FutureBuilder<String>(
-                    future: getImageUrl(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator(); // Show a loading indicator
-                      } else if (snapshot.hasError) {
-                        return Text('Error loading image'); // Handle errors
-                      } else {
-                        final imageUrl = snapshot.data;
-                        return Image.network(networkImageURL,
-                          width: double.infinity,
-                          fit: BoxFit.cover,); // Display the image
-                      }
-                    },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height*0.6,
+                    child: FutureBuilder<String>(
+                      future: getImageUrl(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator(); // Show a loading indicator
+                        } else if (snapshot.hasError) {
+                          return Text('Error loading image'); // Handle errors
+                        } else {
+                          final imageUrl = snapshot.data;
+                          return Image.network(networkImageURL,
+                            width: double.infinity,
+                            fit: BoxFit.cover,); // Display the image
+                        }
+                      },
+                    ),
                   ),
                 ),
                 Center(
@@ -76,10 +79,9 @@ class _ProfileState extends State<Profile> {
                     child: Text("${userData.firstName} ${userData.lastName}", style: TextStyle(fontSize: 18.0, color: Theme.of(context).colorScheme.background),),
                   ),
                 ),
-
               ],
             ),
-            
+            Text("No time to make full design :(\n${userData.toJson()}"),
 
           ],
         ),
