@@ -8,8 +8,10 @@ class Soon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Text("Coming Soon!"),
+      body: Center(
+        child: Container(
+          child: const Text("Coming Soon!"),
+        ),
       ),
     );
   }

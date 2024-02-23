@@ -25,9 +25,10 @@ final class UserService {
   }
 
   Future<void> fetchUser(String email, String password) async{
-    final url = 'https://goranov.somee.com/api/Users/login?email=$email&password=$password';
+    final url = 'https://farmers-market.somee.com/api/Users/login?email=$email&password=$password';
     Response<dynamic> response = await dio.get(url);
     User user =  User.fromJson(response.data);
+
     await storage.write(key: "user_data", value: jsonEncode([user.email, user.password]));
     _user = user;
   }

@@ -57,7 +57,7 @@ class _ImageCaptureState extends State<ImageCapture> {
               await ref.putFile(_imageFile!);
               Navigator.push(context,
                 MaterialPageRoute(builder: (context){
-                  return Main();
+                  return Navigation();
                 }),
               );
             },

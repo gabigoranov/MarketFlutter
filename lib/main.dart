@@ -58,23 +58,11 @@ class _MyAppState extends State<MyApp> {
           background: const Color(0xffFAFAFA),
         ),
       ),
-      home: AuthenticationWrapper(),
+      home: const AuthenticationWrapper(),
     );
   }
 }
 
 
-class Main extends StatefulWidget {
-  const Main({super.key});
 
-  @override
-  State<Main> createState() => _MainState();
-}
-
-class _MainState extends State<Main> {
-  @override
-  Widget build(BuildContext context) {
-    return Navigation();
-  }
-}
 

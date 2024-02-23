@@ -29,7 +29,7 @@ class _LoginFormState extends State<RegisterForm> {
     TextEditingController _passwordController = TextEditingController();
 
     Future<void> registerUser(User user) async{
-      const url = 'https://goranov.somee.com/api/Users/add/';
+      const url = 'https://farmers-market.somee.com/api/Users/add/';
       //print(jsonEncode(user).toString());
       final response = await dio.post(url, data: jsonEncode(user));
 
@@ -38,93 +38,146 @@ class _LoginFormState extends State<RegisterForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Form'),
+        title: const Text('Register Form'),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[350],
-
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: _firstNameController,
-                  decoration: const InputDecoration(
-                    labelText: 'First Name',
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 16, 16, 150),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    controller: _firstNameController,
+                    decoration: const InputDecoration(
+                      labelText: 'First Name',
+                    ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid name!";
+                      }
+                      else if(value.length > 12){
+                        return "Max length is 12";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value){},
-                ),
-                TextFormField(
-                  controller: _lastNameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Last Name',
+                  TextFormField(
+                    controller: _lastNameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Last Name',
+                    ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid name!";
+                      }
+                      else if(value.length > 12){
+                        return "Max length is 12";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value){},
-                ),
-                TextFormField(
-                  controller: _ageController,
-                  decoration: const InputDecoration(
-                    labelText: 'Age',
+                  TextFormField(
+                    controller: _ageController,
+                    decoration: const InputDecoration(
+                      labelText: 'Age',
+                    ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid age!";
+                      }
+                      try{
+                        int parsed = int.parse(value);
+                        if(int.parse(value) < 18){
+                          return "Must be at least 18 years old!";
+                        }
+                      }
+                      catch(e){
+                        return "Please enter a valid age!";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value){},
-                ),
-                TextFormField(
-                  controller: _phoneController,
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
+                  TextFormField(
+                    controller: _phoneController,
+                    decoration: const InputDecoration(
+                      labelText: 'Phone Number',
+                    ),
+                    validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "Enter a valid phone number!";
+                        }
+                        return null;
+                    },
                   ),
-                  validator: (value){},
-                ),
-                TextFormField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
+                  TextFormField(
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Description',
+                    ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid description!";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value){},
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                    ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid email!";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value){},
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                    ),
+                    validator: (value) {
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid password!";
+                      }
+                      else if(value.length < 8){
+                        return "Password must be at least 8 characters!";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {},
-                ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () async {
-                    await registerUser(User(id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", firstName: _firstNameController.value.text,
-                                      lastName: _lastNameController.value.text,
-                                      age:  int.parse(_ageController.value.text),
-                                      isVerified: false,
-                                      offers: [],
-                                      description: _descriptionController.value.text,
-                                      password: _passwordController.value.text,
-                                      phoneNumber: _phoneController.value.text,
-                                      email: _emailController.value.text));
-                    await UserService.instance.fetchUser(_emailController.value.text, _passwordController.value.text);
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context){
-                        return const ImageCapture();
-                      }),
-                    );
-                  },
-                  child: const Text('Register'),
-                ),
-              ],
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await registerUser(User(id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", firstName: _firstNameController.value.text,
+                            lastName: _lastNameController.value.text,
+                            age:  int.parse(_ageController.value.text),
+                            offers: [],
+                            description: _descriptionController.value.text,
+                            password: _passwordController.value.text,
+                            phoneNumber: _phoneController.value.text,
+                            rating: 0,
+                            email: _emailController.value.text));
+                        await UserService.instance.fetchUser(_emailController.value.text, _passwordController.value.text);
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return const ImageCapture();
+                          }),
+                        );
+                      }
+                    },
+                    child: const Text('Register'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

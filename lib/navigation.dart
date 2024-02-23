@@ -29,6 +29,7 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
         child: PageView(
           controller: _pageController,

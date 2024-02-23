@@ -7,16 +7,16 @@ class User{
   String firstName;
   String lastName;
   int age;
-  bool isVerified;
   String email;
   String phoneNumber;
   String password;
   String description;
   List<Offer> offers;
+  int rating;
 
   // Constructor
   User({required this.id, required this.firstName, required this.lastName,
-        required this.age, required this.isVerified, required this.email,
+        required this.age, required this.email, this.rating = 0,
         required this.phoneNumber, required this.password, required this.description,
         required this.offers});
 
@@ -31,8 +31,8 @@ class User{
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       age: json['age'] as int,
-      isVerified: json['isVerified'] as bool,
       email: json['email'] as String,
+      rating: json['rating'] as int,
       phoneNumber: json['phoneNumber'] as String,
       password: json['password'] as String,
       description: json['description'] as String,
@@ -48,8 +48,8 @@ class User{
       'firstName': firstName,
       'lastName': lastName,
       'age': age,
-      'isVerified': isVerified,
       'email': email,
+      'rating': rating,
       'phoneNumber': phoneNumber,
       'password': password,
       'description': description,
