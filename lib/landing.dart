@@ -9,7 +9,7 @@ class Landing extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.white,
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -27,7 +27,7 @@ class Landing extends StatelessWidget {
 
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 14),
                       child: TextButton(
                         onPressed: (){
                           Navigator.push(context,
@@ -36,12 +36,17 @@ class Landing extends StatelessWidget {
                             }),
                           );
                         },
-                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.background)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.blue,
+                          shadowColor: Colors.black,
+                          elevation: 4.0,
+                        ),
                         child: Text("Log In", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(14.0),
                       child: TextButton(
                         onPressed: (){
                           Navigator.push(context,
@@ -50,7 +55,12 @@ class Landing extends StatelessWidget {
                             }),
                           );
                         },
-                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.background)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.blue,
+                          shadowColor: Colors.black,
+                          elevation: 4.0,
+                        ),
                         child: Text("Register", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                       ),
                     ),

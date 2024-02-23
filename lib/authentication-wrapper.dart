@@ -18,29 +18,28 @@ class AuthenticationWrapper extends StatefulWidget {
 }
 
 class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
-  void authenticate() async{
-    //await storage.delete(key: "user_data");
+  bool isAuthenticated = false;
+  Future<void> authenticate() async{
     final String? read = await storage.read(key: "user_data");
     if(read != null){
       final json = await jsonDecode(read);
       await UserService.instance.fetchUser(json[0], json[1]); //maybe remove
-      await Future.delayed(const Duration(microseconds: 600));
-      Navigator.push(context,
-        MaterialPageRoute(builder: (context){
-          return Navigation();
-        }),
-      );
+      isAuthenticated = true;
     }
-    Navigator.push(context,
-      MaterialPageRoute(builder: (context){
-        return Landing();
-      }),
-    );
   }
 
   @override
   Widget build(BuildContext context){
-    authenticate();
-    return Loading();
+    return FutureBuilder(future: authenticate(),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return Loading();
+        }
+        else if(isAuthenticated){
+          return Navigation();
+        }
+        return const Landing();
+      },
+    );
   }
 }

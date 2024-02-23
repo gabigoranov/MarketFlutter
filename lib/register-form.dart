@@ -41,9 +41,12 @@ class _LoginFormState extends State<RegisterForm> {
         title: const Text('Register Form'),
       ),
       body: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 16, 16, 150),
+            padding: const EdgeInsets.all(16.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -153,28 +156,46 @@ class _LoginFormState extends State<RegisterForm> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await registerUser(User(id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", firstName: _firstNameController.value.text,
-                            lastName: _lastNameController.value.text,
-                            age:  int.parse(_ageController.value.text),
-                            offers: [],
-                            description: _descriptionController.value.text,
-                            password: _passwordController.value.text,
-                            phoneNumber: _phoneController.value.text,
-                            rating: 0,
-                            email: _emailController.value.text));
-                        await UserService.instance.fetchUser(_emailController.value.text, _passwordController.value.text);
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context){
-                            return const ImageCapture();
-                          }),
-                        );
-                      }
-                    },
-                    child: const Text('Register'),
+                  const SizedBox(height: 32.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await registerUser(User(id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", firstName: _firstNameController.value.text,
+                                      lastName: _lastNameController.value.text,
+                                      age:  int.parse(_ageController.value.text),
+                                      offers: [],
+                                      description: _descriptionController.value.text,
+                                      password: _passwordController.value.text,
+                                      phoneNumber: _phoneController.value.text,
+                                      rating: 0,
+                                      email: _emailController.value.text));
+                                  await UserService.instance.fetchUser(_emailController.value.text, _passwordController.value.text);
+                                  Navigator.push(context,
+                                    MaterialPageRoute(builder: (context){
+                                      return const ImageCapture();
+                                    }),
+                                  );
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blue,
+                                shadowColor: Colors.black,
+                                elevation: 4.0,
+                              ),
+                              child: Text("Register", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

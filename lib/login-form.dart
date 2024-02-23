@@ -30,16 +30,15 @@ class _LoginFormState extends State<LoginForm>{
         title: const Text('Login Form'),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[350],
+        decoration: const BoxDecoration(
+          color: Colors.white,
 
-          ),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
                   controller: emailController,
@@ -63,26 +62,42 @@ class _LoginFormState extends State<LoginForm>{
                     style: TextStyle(color: Colors.red),
                   ), // Replace with your actual widget
                 ),
-                ElevatedButton(
-                      onPressed: () async {
-                        //try{
-                          await UserService.instance.fetchUser(emailController.value.text, passwordController.value.text);
-                          print("mati");
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (context){
-                              return Navigation();
-                            }),
-                          );
-                        //}
-                        //catch(e){
-                        //  setState(() {
-                        //  errorOccurred = true;
-                        //  });
-                        //}
-
-
-                      },
-                      child: const Text('Login'),
+                const SizedBox(height: 16.0,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () async {
+                              try{
+                                await UserService.instance.fetchUser(emailController.value.text, passwordController.value.text);
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context){
+                                    return Navigation();
+                                  }),
+                                );
+                              }
+                              catch(e){
+                                setState(() {
+                                  errorOccurred = true;
+                                });
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.blue,
+                              shadowColor: Colors.black,
+                              elevation: 4.0,
+                            ),
+                            child: Text("Login", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

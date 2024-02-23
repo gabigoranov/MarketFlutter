@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/add-offer.dart';
@@ -65,7 +66,7 @@ class _NavigationState extends State<Navigation> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined, ),
+            icon: Icon(CupertinoIcons.compass, ),
             label: "Discover",
     
           ),
@@ -75,7 +76,7 @@ class _NavigationState extends State<Navigation> {
     
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.send, ),
+            icon: Icon(CupertinoIcons.paperplane_fill, ),
             label: "Message",
     
           ),

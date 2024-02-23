@@ -7,11 +7,10 @@ class Soon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
-        child: Container(
-          child: const Text("Coming Soon!"),
-        ),
+        child: Text("Coming Soon!"),
       ),
     );
   }
