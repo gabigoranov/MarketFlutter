@@ -48,6 +48,8 @@ dependencies:
   image_picker: ^1.0.7
   flutter_spinkit: ^5.2.0
   flutter_launcher_icons: "^0.13.1"
+  flutter_svg: ^2.0.10+1
+
 
 flutter_launcher_icons:
   android: true
@@ -77,6 +79,8 @@ flutter:
   assets:
     - assets/logo.png
     - assets/clouds.png
+    - assets/icons/apple.svg
+    - assets/icons/lemon.svg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

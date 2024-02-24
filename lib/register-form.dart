@@ -27,6 +27,7 @@ class _LoginFormState extends State<RegisterForm> {
     TextEditingController _descriptionController = TextEditingController();
     TextEditingController _emailController = TextEditingController();
     TextEditingController _passwordController = TextEditingController();
+    TextEditingController _townController = TextEditingController();
 
     Future<void> registerUser(User user) async{
       const url = 'https://farmers-market.somee.com/api/Users/add/';
@@ -139,6 +140,18 @@ class _LoginFormState extends State<RegisterForm> {
                       return null;
                     },
                   ),
+                  TextFormField(
+                    controller: _townController,
+                    decoration: const InputDecoration(
+                      labelText: 'Town',
+                    ),
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid Town!";
+                      }
+                      return null;
+                    },
+                  ),
                   const SizedBox(height: 16.0),
                   TextFormField(
                     controller: _passwordController,
@@ -175,6 +188,7 @@ class _LoginFormState extends State<RegisterForm> {
                                       password: _passwordController.value.text,
                                       phoneNumber: _phoneController.value.text,
                                       rating: 0,
+                                      town: _townController.value.text,
                                       email: _emailController.value.text));
                                   await UserService.instance.fetchUser(_emailController.value.text, _passwordController.value.text);
                                   Navigator.push(context,

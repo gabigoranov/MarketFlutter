@@ -72,19 +72,19 @@ class _LoginFormState extends State<LoginForm>{
                         children: [
                           TextButton(
                             onPressed: () async {
-                              try{
+                              //try{
                                 await UserService.instance.fetchUser(emailController.value.text, passwordController.value.text);
                                 Navigator.push(context,
                                   MaterialPageRoute(builder: (context){
                                     return Navigation();
                                   }),
                                 );
-                              }
-                              catch(e){
-                                setState(() {
-                                  errorOccurred = true;
-                                });
-                              }
+                              //}
+                              //catch(e){
+                              //  setState(() {
+                              //    errorOccurred = true;
+                              //  });
+                              //}
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,

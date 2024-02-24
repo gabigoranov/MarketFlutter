@@ -15,11 +15,9 @@ class Offer {
   String title;
   double pricePerKG;
   String ownerId;
-  bool inSeason;
   int offerTypeId;
   // Constructor
-  Offer({required this.id, required this.title, required this.pricePerKG, required this.ownerId,
-    required this.inSeason, required this.offerTypeId});
+  Offer({required this.id, required this.title, required this.pricePerKG, required this.ownerId, required this.offerTypeId});
 
   factory Offer.fromJson(Map<String, dynamic> json) {
     return Offer(
@@ -27,7 +25,6 @@ class Offer {
       title: json['title'] as String,
       pricePerKG: json['pricePerKG'] as double,
       ownerId: json['ownerId'] as String,
-      inSeason: json['inSeason'] as bool,
       offerTypeId: json['offerTypeId'] as int,
     );
   }
@@ -40,7 +37,6 @@ class Offer {
       'title': title,
       'pricePerKG': pricePerKG,
       'ownerId': ownerId,
-      'inSeason': inSeason,
       'offerTypeId': offerTypeId,
     };
   }

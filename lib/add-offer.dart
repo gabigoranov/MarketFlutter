@@ -13,7 +13,7 @@ class AddOfferView extends StatefulWidget {
 
 class _AddOfferViewState extends State<AddOfferView> {
   final userData = UserService.instance.user;
-
+  String? selectedOfferType = '1';
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -58,8 +58,8 @@ class _AddOfferViewState extends State<AddOfferView> {
                     if(value == null || value.isEmpty){
                       return "Please enter a title!";
                     }
-                    else if(value.length > 16){
-                      return "Max length is 16";
+                    else if(value.length > 24){
+                      return "Max length is 24";
                     }
                     return null;
                   },
@@ -68,7 +68,7 @@ class _AddOfferViewState extends State<AddOfferView> {
                 TextFormField(
                   controller: priceController,
                   decoration: InputDecoration(
-                    labelText: 'Title',
+                    labelText: 'Price',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -90,35 +90,16 @@ class _AddOfferViewState extends State<AddOfferView> {
                   },
                 ),
                 const SizedBox(height: 16.0,),
-                TextFormField(
-                  controller: isInSeason,
-                  decoration: InputDecoration(
-                    labelText: 'In Season?',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  validator: (value){
-                    if(value == null || value.isEmpty || (value != "true" && value !="false")){
-                      return "Please enter true or false!";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16.0,),
-                TextFormField(
-                  controller: offerType,
-                  decoration: InputDecoration(
-                    labelText: 'Offer Type',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  validator: (value){
-                    if(value == null || value.isEmpty){
-                      return "Will be dropdown eventually :(";
-                    }
-                    return null;
+                DropdownButton<String>(
+                  value: selectedOfferType,
+                  items: const[
+                    DropdownMenuItem(value: '1', child: Text('Apples'), ),
+                    DropdownMenuItem(value: '2', child: Text('Lemons'), ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedOfferType = value;
+                    });
                   },
                 ),
                 const SizedBox(height: 25,),
@@ -134,9 +115,8 @@ class _AddOfferViewState extends State<AddOfferView> {
                               if (formKey.currentState!.validate()) {
                                 await addOffer(Offer(id: -1, title: titleController.value.text,
                                     pricePerKG: double.parse(priceController.value.text),
-                                    inSeason:  bool.parse(isInSeason.value.text),
                                     ownerId: userData.id,
-                                    offerTypeId: int.parse(offerType.value.text)
+                                    offerTypeId: int.parse(selectedOfferType!),
                                 ));
                                 await UserService.instance.fetchUser(userData.email, userData.password);
                                 Navigator.push(context,
