@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:market/main.dart';
-import 'package:market/models/image-capture.dart';
+import 'package:market/models/file-selector.dart';
 import 'package:market/models/user-service.dart';
 import 'package:market/models/user.dart';
 
@@ -193,7 +193,7 @@ class _LoginFormState extends State<RegisterForm> {
                                   await UserService.instance.fetchUser(_emailController.value.text, _passwordController.value.text);
                                   Navigator.push(context,
                                     MaterialPageRoute(builder: (context){
-                                      return const ImageCapture();
+                                      return ImageCapture(path: "profiles");
                                     }),
                                   );
                                 }

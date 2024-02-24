@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:market/models/offer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:market/models/user.dart';
+import 'package:market/offer-view.dart';
 
 
 class OfferView extends StatelessWidget {
@@ -30,55 +31,64 @@ class OfferView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width*0.9,
-      height: MediaQuery.of(context).size.height*0.1,
-      decoration: BoxDecoration(
-        color: const Color(0xffFFFFFF),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black38,
-            spreadRadius: 0,
-            blurRadius: 0.6,
-            offset: Offset(0, 1), // changes position of shadow
-          ),
-        ],
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: colors[offer.offerTypeId],
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: const[
-                  BoxShadow(
-                    color: Colors.black38,
-                    spreadRadius: 1.0,
-                    blurRadius: 0.6,
-                    offset: Offset(0.5, 1), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Center(child: offerTypes[offer.offerTypeId]),
+    return GestureDetector(
+      child: Container(
+        width: MediaQuery.of(context).size.width*0.9,
+        height: MediaQuery.of(context).size.height*0.1,
+        decoration: BoxDecoration(
+          color: const Color(0xffFFFFFF),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black38,
+              spreadRadius: 0,
+              blurRadius: 0.6,
+              offset: Offset(0, 1), // changes position of shadow
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(offer.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.black87),),
-                Text("${offer.pricePerKG}lv/kg ") //TODO: add town to user class (update api and db)
-              ],
-            )
-
           ],
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: colors[offer.offerTypeId],
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: const[
+                    BoxShadow(
+                      color: Colors.black38,
+                      spreadRadius: 1.0,
+                      blurRadius: 0.6,
+                      offset: Offset(0.5, 1), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Center(child: offerTypes[offer.offerTypeId]),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(offer.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.black87),),
+                  Text("${offer.pricePerKG}lv/kg ") //TODO: add town to user class (update api and db)
+                ],
+              )
+
+            ],
+          ),
         ),
       ),
+      onTap: (){
+        Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return OfferDescriptionView(offer: offer);
+          }),
+        );
+      },
     );
   }
 }

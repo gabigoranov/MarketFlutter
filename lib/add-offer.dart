@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:market/models/file-selector.dart';
 import 'package:market/models/offer.dart';
 import 'package:market/models/user-service.dart';
 import 'package:market/navigation.dart';
@@ -113,7 +114,8 @@ class _AddOfferViewState extends State<AddOfferView> {
                           TextButton(
                             onPressed: () async {
                               if (formKey.currentState!.validate()) {
-                                await addOffer(Offer(id: -1, title: titleController.value.text,
+                                await addOffer(Offer(id: -1,
+                                    title: titleController.value.text,
                                     pricePerKG: double.parse(priceController.value.text),
                                     ownerId: userData.id,
                                     offerTypeId: int.parse(selectedOfferType!),
@@ -121,9 +123,10 @@ class _AddOfferViewState extends State<AddOfferView> {
                                 await UserService.instance.fetchUser(userData.email, userData.password);
                                 Navigator.push(context,
                                   MaterialPageRoute(builder: (context){
-                                    return Navigation();
+                                    return ImageCapture(path: "offers");
                                   }),
                                 );
+
                               }
                             },
                             style: ElevatedButton.styleFrom(

@@ -1,11 +1,11 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:market/Subviews/offer.dart';
 import 'package:market/loading.dart';
 import 'package:market/models/user-service.dart';
 import 'package:market/models/user.dart';
+import 'package:market/models/firebase-service.dart';
 
 
 class Profile extends StatefulWidget {
@@ -23,10 +23,8 @@ class _ProfileState extends State<Profile> {
 
 
   Future<String> getData() async{
-    final profiles = storage.child("profiles");
-    final profileRef = profiles.child("${userData.id}.jpg");
-    networkImageURL = await profileRef.getDownloadURL();
-
+    FirebaseService fbService = FirebaseService();
+    networkImageURL = await fbService.getImageLink("profiles/${userData.id}");
     userOffers = [];
     for(int i = 0; i < userData.offers.length; i++){
       userOffers.add(OfferView(offer: userData.offers[i]));

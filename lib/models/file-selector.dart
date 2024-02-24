@@ -1,29 +1,24 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:market/login-form.dart';
-import 'package:market/main.dart';
+import 'package:market/models/firebase-service.dart';
 import 'package:market/models/user-service.dart';
 import 'package:market/models/user.dart';
 import 'package:market/navigation.dart';
 
-final _picker = ImagePicker();
-
 class ImageCapture extends StatefulWidget {
-  const ImageCapture({super.key});
+  String path;
+  ImageCapture({super.key, required this.path});
 
   @override
-  State<ImageCapture> createState() => _ImageCaptureState();
+  State<ImageCapture> createState() => _ImageCaptureState(path);
 }
 
 class _ImageCaptureState extends State<ImageCapture> {
   File? _imageFile;
-
-  void dispose() {
-    super.dispose();
+  late String imagePath;
+  _ImageCaptureState(String path){
+    imagePath = path;
   }
 
   Future<void> _pickImage() async{
@@ -42,6 +37,21 @@ class _ImageCaptureState extends State<ImageCapture> {
     }
   }
 
+  Future<void> uploadProfileImage() async{
+    await _pickImage();
+    User userData = UserService.instance.user;
+    final uploader = FirebaseService();
+    uploader.uploadFile(_imageFile, imagePath, userData.id);
+  }
+
+  Future<void> uploadOfferImage() async{
+    await _pickImage();
+    final uploader = FirebaseService();
+    uploader.uploadFile(_imageFile, imagePath, UserService.instance.user.offers.last.id.toString());
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,15 +60,18 @@ class _ImageCaptureState extends State<ImageCapture> {
           TextButton(
             child: const Text("Upload"),
             onPressed: () async {
-              await _pickImage();
-              final storage = FirebaseStorage.instance;
-              User userData = UserService.instance.user;
-              final Reference ref = storage.ref().child('profiles/${userData.id}.jpg');
-              await ref.putFile(_imageFile!);
-              Navigator.push(context,
+              if(imagePath == "profiles"){
+                await uploadProfileImage();
+              }
+              else if(imagePath == "offers"){
+                await uploadOfferImage();
+              }
+              Navigator.pushAndRemoveUntil(
+                context,
                 MaterialPageRoute(builder: (context){
                   return Navigation();
                 }),
+                ModalRoute.withName('/'),
               );
             },
           ),
