@@ -15,13 +15,15 @@ class AddOfferView extends StatefulWidget {
 class _AddOfferViewState extends State<AddOfferView> {
   final userData = UserService.instance.user;
   String? selectedOfferType = '1';
+  String? selectedOfferTown = 'Montana';
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> dropdownKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> townDropdownKey = GlobalKey<FormState>();
     TextEditingController titleController = TextEditingController();
+    TextEditingController descriptionController = TextEditingController();
     TextEditingController priceController = TextEditingController();
-    TextEditingController isInSeason = TextEditingController();
-    TextEditingController offerType = TextEditingController();
 
     Future<void> addOffer(Offer offer) async{
       const url = 'https://farmers-market.somee.com/api/Offers/add';
@@ -67,6 +69,26 @@ class _AddOfferViewState extends State<AddOfferView> {
                 ),
                 const SizedBox(height: 16.0,),
                 TextFormField(
+                  controller: descriptionController,
+
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  validator: (value){
+                    if(value == null || value.isEmpty){
+                      return "Please enter a description!";
+                    }
+                    else if(value.length > 300){
+                      return "Max length is 300";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16.0,),
+                TextFormField(
                   controller: priceController,
                   decoration: InputDecoration(
                     labelText: 'Price',
@@ -92,14 +114,34 @@ class _AddOfferViewState extends State<AddOfferView> {
                 ),
                 const SizedBox(height: 16.0,),
                 DropdownButton<String>(
+                  key: dropdownKey,
                   value: selectedOfferType,
                   items: const[
                     DropdownMenuItem(value: '1', child: Text('Apples'), ),
                     DropdownMenuItem(value: '2', child: Text('Lemons'), ),
+                    DropdownMenuItem(value: '3', child: Text('Eggs'), ),
+                    DropdownMenuItem(value: '4', child: Text('Bananas'), ),
+                    DropdownMenuItem(value: '5', child: Text('Grapes'), ),
+                    DropdownMenuItem(value: '6', child: Text('Oranges'), ),
                   ],
                   onChanged: (value) {
                     setState(() {
                       selectedOfferType = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 25,),
+                DropdownButton<String>(
+                  key: townDropdownKey,
+                  value: selectedOfferTown,
+                  items: const[
+                    DropdownMenuItem(value: 'Montana', child: Text('Montana'), ),
+                    DropdownMenuItem(value: 'Sofia', child: Text('Sofia'), ),
+                    DropdownMenuItem(value: 'Burgas', child: Text('Burgas'), ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedOfferTown = value;
                     });
                   },
                 ),
@@ -116,6 +158,8 @@ class _AddOfferViewState extends State<AddOfferView> {
                               if (formKey.currentState!.validate()) {
                                 await addOffer(Offer(id: -1,
                                     title: titleController.value.text,
+                                    town: selectedOfferTown!,
+                                    description: descriptionController.value.text,
                                     pricePerKG: double.parse(priceController.value.text),
                                     ownerId: userData.id,
                                     offerTypeId: int.parse(selectedOfferType!),

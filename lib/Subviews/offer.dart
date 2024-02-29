@@ -22,10 +22,38 @@ class OfferView extends StatelessWidget {
       height: 30, // Set the desired height
       color: Colors.white, // Optionally set a color
     ),
+    3: SvgPicture.asset(
+      'assets/icons/eggs.svg',
+      width: 30,  // Set the desired width
+      height: 30, // Set the desired height
+      color: Colors.white, // Optionally set a color
+    ),
+    4: SvgPicture.asset(
+      'assets/icons/bananas.svg',
+      width: 30,  // Set the desired width
+      height: 30, // Set the desired height
+      color: Colors.white, // Optionally set a color
+    ),
+    5: SvgPicture.asset(
+      'assets/icons/grapes.svg',
+      width: 30,  // Set the desired width
+      height: 30, // Set the desired height
+      color: Colors.white, // Optionally set a color
+    ),
+    6: SvgPicture.asset(
+      'assets/icons/oranges.svg',
+      width: 30,  // Set the desired width
+      height: 30, // Set the desired height
+      color: Colors.white, // Optionally set a color
+    ),
   };
   Map<int, Color> colors = {
     1: const Color(0xffF67979),
     2: const Color(0xffFFE380),
+    3: const Color(0xffF3E1A3),
+    4: const Color(0xffF6EA79),
+    5: const Color(0xff6A4382),
+    6: const Color(0xffFFB763),
   };
 
 

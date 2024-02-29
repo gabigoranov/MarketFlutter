@@ -23,15 +23,17 @@ class _ProfileState extends State<Profile> {
 
 
   Future<String> getData() async{
-    FirebaseService fbService = FirebaseService();
-    networkImageURL = await fbService.getImageLink("profiles/${userData.id}");
-    userOffers = [];
-    for(int i = 0; i < userData.offers.length; i++){
-      userOffers.add(OfferView(offer: userData.offers[i]));
-      userOffers.add(const SizedBox(height: 10,));
-    }
-
+    await Future.delayed(const Duration(milliseconds: 500), () async{
+      FirebaseService fbService = FirebaseService();
+      networkImageURL = await fbService.getImageLink("profiles/${userData.id}");
+      userOffers = [];
+      for(int i = 0; i < userData.offers.length; i++){
+        userOffers.add(OfferView(offer: userData.offers[i]));
+        userOffers.add(const SizedBox(height: 10,));
+      }
+    });
     return networkImageURL;
+
   }
 
 
@@ -47,7 +49,6 @@ class _ProfileState extends State<Profile> {
           } else if (snapshot.hasError) {
             return const Text('Error loading image'); // Handle errors
           } else {
-            final imageUrl = snapshot.data;
             return SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.fromLTRB(0,0,0,16),
@@ -55,17 +56,27 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   children: [
                     Stack(
-                      children: [
+                      children: <Widget>[
                         Container(
                           constraints: const BoxConstraints(
-                            maxHeight: 350,
+                            maxHeight: 400,
                             //maximum width set to 100% of width
                           ),
                           child: Container(
+
                             height: MediaQuery.of(context).size.height*0.6,
                             child: Image.network(networkImageURL,
                               width: double.infinity,
                               fit: BoxFit.cover,
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  // Image is fully loaded
+                                  return child;
+                                } else {
+                                  // Display a loading indicator (e.g., CircularProgressIndicator)
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                              },
                             ),
                           ),
                         ),
@@ -86,8 +97,17 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ],
                             ),
-              
+
                             child: Text("${userData.firstName} ${userData.lastName}", style: TextStyle(fontSize: 18.0, color: Theme.of(context).colorScheme.background),),
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Image.asset("assets/clouds.png",
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ],
@@ -102,12 +122,12 @@ class _ProfileState extends State<Profile> {
                             decoration: BoxDecoration(
                               color: const Color(0xff40B886),
                               borderRadius: BorderRadius.circular(25),
-                              boxShadow: [
+                              boxShadow: const[
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 3,
-                                  offset: const Offset(0, 1),
+                                  color: Colors.black38,
+                                  spreadRadius: 0,
+                                  blurRadius: 0.6,
+                                  offset: Offset(0, 1), // changes position of shadow
                                 ),
                               ],
                             ),
@@ -121,14 +141,14 @@ class _ProfileState extends State<Profile> {
                             child:  Container(
                               height: 115,
                               decoration: BoxDecoration(
-                                color: const Color(0xffEEEEEE),
+                                color: const Color(0xffFEFEFE),
                                 borderRadius: BorderRadius.circular(25),
-                                boxShadow: [
+                                boxShadow: const[
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 3,
-                                    offset: const Offset(0, 1),
+                                    color: Colors.black38,
+                                    spreadRadius: 0,
+                                    blurRadius: 0.6,
+                                    offset: Offset(0, 1), // changes position of shadow
                                   ),
                                 ],
                               ),
@@ -140,14 +160,14 @@ class _ProfileState extends State<Profile> {
                             child: Container(
                               height: 115,
                               decoration: BoxDecoration(
-                                color: const Color(0xffEEEEEE),
+                                color: const Color(0xffFEFEFE),
                                 borderRadius: BorderRadius.circular(25),
-                                boxShadow: [
+                                boxShadow: const[
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 3,
-                                    offset: const Offset(0, 1),
+                                    color: Colors.black38,
+                                    spreadRadius: 0,
+                                    blurRadius: 0.6,
+                                    offset: Offset(0, 1), // changes position of shadow
                                   ),
                                 ],
                               ),
@@ -163,12 +183,12 @@ class _ProfileState extends State<Profile> {
                             decoration: BoxDecoration(
                               color: const Color(0xff40B886),
                               borderRadius: BorderRadius.circular(25),
-                              boxShadow: [
+                              boxShadow: const[
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 3,
-                                  offset: const Offset(0, 1),
+                                  color: Colors.black38,
+                                  spreadRadius: 0,
+                                  blurRadius: 0.6,
+                                  offset: Offset(0, 1), // changes position of shadow
                                 ),
                               ],
                             ),
@@ -185,7 +205,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ],
                       ),
-              
+
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
@@ -194,7 +214,7 @@ class _ProfileState extends State<Profile> {
                     Column(
                       children: userOffers,
                     )
-              
+
                   ],
                 ),
               ),

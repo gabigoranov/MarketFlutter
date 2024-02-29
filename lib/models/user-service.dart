@@ -33,6 +33,11 @@ final class UserService {
     _user = user;
   }
 
-
+  Future<User> getWithId(String id) async{
+    final url = 'https://farmers-market.somee.com/api/Users/getWithId?id=$id';
+    Response<dynamic> response = await dio.get(url);
+    User user =  User.fromJson(response.data);
+    return user;
+  }
 
 }

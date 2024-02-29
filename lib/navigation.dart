@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/add-offer.dart';
+import 'package:market/discover.dart';
 import 'package:market/profile.dart';
 import 'package:market/soon.dart';
 
@@ -18,7 +19,7 @@ class _NavigationState extends State<Navigation> {
   PageController _pageController = PageController();
   List<Widget> pages = [
     Soon(),
-    Soon(),
+    Discover(),
     AddOfferView(),
     Soon(),
     Profile(),

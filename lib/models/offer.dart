@@ -13,16 +13,20 @@ class Offer {
 
   int id;
   String title;
+  String town;
+  String description;
   double pricePerKG;
   String ownerId;
   int offerTypeId;
   // Constructor
-  Offer({required this.id, required this.title, required this.pricePerKG, required this.ownerId, required this.offerTypeId});
+  Offer({required this.id, required this.title, required this.town, required this.pricePerKG, required this.ownerId, required this.offerTypeId, required this.description});
 
   factory Offer.fromJson(Map<String, dynamic> json) {
     return Offer(
       id: json['id'] as int,
       title: json['title'] as String,
+      town: json['town'] as String,
+      description: json['description'] as String,
       pricePerKG: json['pricePerKG'] as double,
       ownerId: json['ownerId'] as String,
       offerTypeId: json['offerTypeId'] as int,
@@ -38,6 +42,8 @@ class Offer {
       'pricePerKG': pricePerKG,
       'ownerId': ownerId,
       'offerTypeId': offerTypeId,
+      'description': description,
+      'town': town,
     };
   }
 }

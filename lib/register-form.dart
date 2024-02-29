@@ -32,7 +32,7 @@ class _LoginFormState extends State<RegisterForm> {
     Future<void> registerUser(User user) async{
       const url = 'https://farmers-market.somee.com/api/Users/add/';
       //print(jsonEncode(user).toString());
-      final response = await dio.post(url, data: jsonEncode(user));
+      await dio.post(url, data: jsonEncode(user));
 
       //print(response);
     }
