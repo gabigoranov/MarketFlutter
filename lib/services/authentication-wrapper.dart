@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/landing.dart';
-import 'package:market/loading.dart';
+import 'package:market/views/landing.dart';
+import 'package:market/views/loading.dart';
 import 'package:market/main.dart';
-import 'package:market/models/user-service.dart';
-import 'package:market/navigation.dart';
+import 'package:market/services/user-service.dart';
+import 'package:market/views/navigation.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -23,7 +23,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     final String? read = await storage.read(key: "user_data");
     if(read != null){
       final json = await jsonDecode(read);
-      await UserService.instance.fetchUser(json[0], json[1]); //maybe remove
+      await UserService.instance.login(json[0], json[1]); //maybe remove
       isAuthenticated = true;
     }
   }

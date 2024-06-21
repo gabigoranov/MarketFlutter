@@ -1,24 +1,29 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market/Subviews/offer.dart';
-import 'package:market/loading.dart';
-import 'package:market/models/user-service.dart';
+import 'package:market/components/offer-component.dart';
+import 'package:market/views/landing.dart';
+import 'package:market/views/loading.dart';
+import 'package:market/services/user-service.dart';
 import 'package:market/models/user.dart';
-import 'package:market/models/firebase-service.dart';
+import 'package:market/services/firebase-service.dart';
 
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  User userData;
+  Profile({super.key, required this.userData});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<Profile> createState() => _ProfileState(userData);
 }
 
 class _ProfileState extends State<Profile> {
   final storage = FirebaseStorage.instance.ref();
   String networkImageURL = '';
-  User userData = UserService.instance.user;
+  late User userData;
+  _ProfileState(User user){
+    userData = user;
+  }
   List<Widget> userOffers = [];
 
 
@@ -28,7 +33,7 @@ class _ProfileState extends State<Profile> {
       networkImageURL = await fbService.getImageLink("profiles/${userData.id}");
       userOffers = [];
       for(int i = 0; i < userData.offers.length; i++){
-        userOffers.add(OfferView(offer: userData.offers[i]));
+        userOffers.add(OfferComponent(offer: userData.offers[i]));
         userOffers.add(const SizedBox(height: 10,));
       }
     });
@@ -97,8 +102,55 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ],
                             ),
+                            child: Text(
+                              "${userData.firstName} ${userData.lastName}",
+                              style: TextStyle(fontSize: 18.0, color: Theme.of(context).colorScheme.background),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Visibility(
+                            visible: userData.id == UserService.instance.user.id,
+                            child: PopupMenuButton<String>(
+                              icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.primary, size: 34,), // The three lines icon
+                              onSelected: (String result) {
 
-                            child: Text("${userData.firstName} ${userData.lastName}", style: TextStyle(fontSize: 18.0, color: Theme.of(context).colorScheme.background),),
+                              },
+                              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                                PopupMenuItem<String>(
+                                  value: 'logout',
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(builder: (context){
+                                          return const Landing();
+                                        }),
+                                        ModalRoute.withName('/'),
+                                      );
+                                    },
+                                    child: const Text('Logout')
+                                  ),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'delete',
+                                  child: TextButton(
+                                    onPressed: () async{
+                                      await UserService.instance.delete(UserService.instance.user.id);
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(builder: (context){
+                                          return const Landing();
+                                        }),
+                                        ModalRoute.withName('/'),
+                                      );
+                                    },
+                                    child: const Text('Delete'),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Positioned.fill(

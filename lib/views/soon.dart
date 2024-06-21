@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:market/models/user-service.dart';
-import 'package:market/models/user.dart';
 
 class Soon extends StatelessWidget {
   const Soon({super.key});

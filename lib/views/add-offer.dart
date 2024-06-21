@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:market/models/file-selector.dart';
+import 'package:market/views/file-selector.dart';
 import 'package:market/models/offer.dart';
-import 'package:market/models/user-service.dart';
-import 'package:market/navigation.dart';
+import 'package:market/services/user-service.dart';
+import 'package:market/views/navigation.dart';
 
 class AddOfferView extends StatefulWidget {
   const AddOfferView({super.key});
@@ -164,7 +164,7 @@ class _AddOfferViewState extends State<AddOfferView> {
                                     ownerId: userData.id,
                                     offerTypeId: int.parse(selectedOfferType!),
                                 ));
-                                await UserService.instance.fetchUser(userData.email, userData.password);
+                                await UserService.instance.login(userData.email, userData.password);
                                 Navigator.push(context,
                                   MaterialPageRoute(builder: (context){
                                     return ImageCapture(path: "offers");

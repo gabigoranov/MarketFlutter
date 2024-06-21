@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market/models/offer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:market/models/user.dart';
-import 'package:market/offer-view.dart';
+import 'package:market/views/offer-view.dart';
 
 
-class OfferView extends StatelessWidget {
+class OfferComponent extends StatelessWidget {
   Offer offer;
-  OfferView({super.key, required this.offer});
+  OfferComponent({super.key, required this.offer});
   Map<int, Widget> offerTypes = {
     1: SvgPicture.asset(
       'assets/icons/apple.svg',
@@ -101,7 +100,7 @@ class OfferView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(offer.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.black87),),
+                  Text(offer.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.tertiary),),
                   Text("${offer.pricePerKG}lv/kg ") //TODO: add town to user class (update api and db)
                 ],
               )
@@ -113,7 +112,7 @@ class OfferView extends StatelessWidget {
       onTap: (){
         Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return OfferDescriptionView(offer: offer);
+            return OfferView(offer: offer);
           }),
         );
       },

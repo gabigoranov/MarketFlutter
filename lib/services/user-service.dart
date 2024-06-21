@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/login-form.dart';
+import 'package:market/views/login-form.dart';
 import 'package:market/models/user.dart';
 
 final storage = FlutterSecureStorage();
@@ -24,7 +24,7 @@ final class UserService {
     _user = user;
   }
 
-  Future<void> fetchUser(String email, String password) async{
+  Future<void> login(String email, String password) async{
     final url = 'https://farmers-market.somee.com/api/Users/login?email=$email&password=$password';
     Response<dynamic> response = await dio.get(url);
     User user =  User.fromJson(response.data);
@@ -33,11 +33,25 @@ final class UserService {
     _user = user;
   }
 
+  Future<void> reload() async{
+    final url = 'https://farmers-market.somee.com/api/Users/login?email=${this.user.email}&password=${this.user.password}';
+    Response<dynamic> response = await dio.get(url);
+    User user =  User.fromJson(response.data);
+    _user = user;
+  }
+
   Future<User> getWithId(String id) async{
     final url = 'https://farmers-market.somee.com/api/Users/getWithId?id=$id';
     Response<dynamic> response = await dio.get(url);
     User user =  User.fromJson(response.data);
     return user;
+  }
+
+  Future<String> delete(String id) async{
+    final url = 'https://farmers-market.somee.com/api/Users/delete?id=$id';
+    print(url);
+    Response<dynamic> response = await dio.get(url);
+    return response.data;
   }
 
 }

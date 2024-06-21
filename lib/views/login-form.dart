@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:market/main.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/models/user-service.dart';
-import 'package:market/navigation.dart';
+import 'package:market/services/user-service.dart';
+import 'package:market/views/navigation.dart';
 
 final dio = Dio();
 final storage = FlutterSecureStorage();
@@ -73,7 +72,7 @@ class _LoginFormState extends State<LoginForm>{
                           TextButton(
                             onPressed: () async {
                               //try{
-                                await UserService.instance.fetchUser(emailController.value.text, passwordController.value.text);
+                                await UserService.instance.login(emailController.value.text, passwordController.value.text);
                                 Navigator.push(context,
                                   MaterialPageRoute(builder: (context){
                                     return Navigation();

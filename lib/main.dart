@@ -1,11 +1,8 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/authentication-wrapper.dart';
-import 'navigation.dart';
+import 'package:market/services/authentication-wrapper.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -53,9 +50,11 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         // Define the default brightness and colors.
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFFFFFFF),
-          primary: const Color(0xff5186c3),
-          background: const Color(0xffFAFAFA),
+          seedColor: const Color(0xffFFFFFF),
+          secondary: const Color(0xff40B886),
+          primary: const Color(0xff2C92FF),
+          background: const Color(0xffFFFFFF),
+          tertiary: const Color(0xff2C2B2B)
         ),
       ),
       home: const AuthenticationWrapper(),

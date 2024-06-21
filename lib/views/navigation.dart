@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/add-offer.dart';
-import 'package:market/discover.dart';
-import 'package:market/profile.dart';
-import 'package:market/soon.dart';
+import 'package:market/services/user-service.dart';
+import 'package:market/views/add-offer.dart';
+import 'package:market/views/discover.dart';
+import 'package:market/views/home.dart';
+import 'package:market/views/profile.dart';
+import 'package:market/views/soon.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -18,11 +20,11 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   PageController _pageController = PageController();
   List<Widget> pages = [
-    Soon(),
+    Home(),
     Discover(),
     AddOfferView(),
     Soon(),
-    Profile(),
+    Profile(userData: UserService.instance.user),
   ];
 
   int _currentIndex = 0;
@@ -32,15 +34,18 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-      body: SafeArea(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          children: pages,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+        child: SafeArea(
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            children: pages,
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

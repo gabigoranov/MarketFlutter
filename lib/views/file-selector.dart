@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:market/models/firebase-service.dart';
-import 'package:market/models/user-service.dart';
+import 'package:market/services/firebase-service.dart';
+import 'package:market/services/user-service.dart';
 import 'package:market/models/user.dart';
-import 'package:market/navigation.dart';
+import 'package:market/views/navigation.dart';
 
 class ImageCapture extends StatefulWidget {
   String path;

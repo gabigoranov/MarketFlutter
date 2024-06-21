@@ -1,13 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market/loading.dart';
-import 'package:market/models/firebase-service.dart';
+import 'package:market/services/offer-service.dart';
+import 'package:market/views/loading.dart';
+import 'package:market/services/firebase-service.dart';
 import 'package:market/models/offer.dart';
-import 'package:market/models/user-service.dart';
+import 'package:market/services/user-service.dart';
 import 'package:market/models/user.dart';
+import 'package:market/views/navigation.dart';
 
-class OfferDescriptionView extends StatelessWidget {
+class OfferView extends StatelessWidget {
   Offer offer;
-  OfferDescriptionView({super.key, required this.offer});
+  OfferView({super.key, required this.offer});
 
   User? owner;
   String? imageLink;
@@ -82,11 +85,35 @@ class OfferDescriptionView extends StatelessWidget {
                       Center(
                         child: Column(
                           children: [
-                            Text(offer.title, style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w900),),
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(offer.title, style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w900),),
+                                  Visibility(
+                                    visible: offer.ownerId == UserService.instance.user.id,
+                                    child: IconButton(
+                                      onPressed: () async{
+                                        await OfferService.instance.delete(offer.id);
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(builder: (context){
+                                            return Navigation();
+                                          }),
+                                          ModalRoute.withName('/'),
+                                        );
+                                      },
+                                      icon: const Icon(CupertinoIcons.delete_solid),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Container(height: MediaQuery.of(context).size.height*0.25,width: MediaQuery.of(context).size.width*0.9, child: Text(offer.description, textAlign: TextAlign.left,style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black54),)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+
                                 TextButton(onPressed: (){},
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xff40B886),
