@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:market/main.dart';
 import 'package:market/views/file-selector.dart';
 import 'package:market/services/user-service.dart';
 import 'package:market/models/user.dart';
@@ -31,7 +30,7 @@ class _LoginFormState extends State<RegisterForm> {
 
     Future<void> registerUser(User user) async{
       const url = 'https://farmers-market.somee.com/api/Users/add/';
-      //print(jsonEncode(user).toString());
+      print(jsonEncode(user).toString());
       await dio.post(url, data: jsonEncode(user));
 
       //print(response);
@@ -180,7 +179,9 @@ class _LoginFormState extends State<RegisterForm> {
                             TextButton(
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await registerUser(User(id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", firstName: _firstNameController.value.text,
+                                  await registerUser(User(
+                                      id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                      firstName: _firstNameController.value.text,
                                       lastName: _lastNameController.value.text,
                                       age:  int.parse(_ageController.value.text),
                                       offers: [],
@@ -189,7 +190,8 @@ class _LoginFormState extends State<RegisterForm> {
                                       phoneNumber: _phoneController.value.text,
                                       rating: 0,
                                       town: _townController.value.text,
-                                      email: _emailController.value.text));
+                                      email: _emailController.value.text,
+                                      isSeller: false));
                                   await UserService.instance.login(_emailController.value.text, _passwordController.value.text);
                                   Navigator.push(context,
                                     MaterialPageRoute(builder: (context){

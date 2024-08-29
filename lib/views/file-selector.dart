@@ -69,7 +69,7 @@ class _ImageCaptureState extends State<ImageCapture> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context){
-                  return Navigation();
+                  return Navigation(index: 0,);
                 }),
                 ModalRoute.withName('/'),
               );

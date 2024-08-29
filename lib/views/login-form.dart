@@ -75,7 +75,7 @@ class _LoginFormState extends State<LoginForm>{
                                 await UserService.instance.login(emailController.value.text, passwordController.value.text);
                                 Navigator.push(context,
                                   MaterialPageRoute(builder: (context){
-                                    return Navigation();
+                                    return Navigation(index: 0,);
                                   }),
                                 );
                               //}

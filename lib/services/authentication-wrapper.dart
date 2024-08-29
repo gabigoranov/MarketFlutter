@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/views/landing.dart';
 import 'package:market/views/loading.dart';
-import 'package:market/main.dart';
 import 'package:market/services/user-service.dart';
 import 'package:market/views/navigation.dart';
 
@@ -36,8 +35,9 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
           return Loading();
         }
         else if(isAuthenticated){
-          return Navigation();
+          return Navigation(index: 0,);
         }
+
         return const Landing();
       },
     );

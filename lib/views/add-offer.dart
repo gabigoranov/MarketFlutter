@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:market/views/file-selector.dart';
 import 'package:market/models/offer.dart';
 import 'package:market/services/user-service.dart';
-import 'package:market/views/navigation.dart';
 
 class AddOfferView extends StatefulWidget {
   const AddOfferView({super.key});

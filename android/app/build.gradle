@@ -26,9 +26,8 @@ if (flutterVersionName == null) {
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 34 //TODO
+    compileSdkVersion 34
     namespace "com.example.market"
-    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {

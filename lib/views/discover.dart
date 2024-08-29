@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market/components/discover-category-component.dart';
 import 'package:market/components/offer-component.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/models/offer.dart';
@@ -11,18 +10,23 @@ import 'package:market/models/user.dart';
 final dio = Dio();
 
 class Discover extends StatefulWidget {
-  const Discover({super.key});
+  String text;
+  Discover({super.key, this.text = ""});
 
   @override
-  State<Discover> createState() => _DiscoverState();
+  State<Discover> createState() => _DiscoverState(text);
 }
 
 class _DiscoverState extends State<Discover> {
+
   List<Widget> offers = [];
   List<Widget> searched = [];
+  String text = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController searchController = TextEditingController();
   User userData = UserService.instance.user;
+
+  _DiscoverState(String text);
 
   Future<void> getData() async{
     String url = 'https://farmers-market.somee.com/api/Offers/getAll';
@@ -32,6 +36,20 @@ class _DiscoverState extends State<Discover> {
       offers.add(OfferComponent(offer: Offer.fromJson(response.data[i])));
       offers.add(const SizedBox(height: 10,));
     }
+  }
+
+  Future<void> search(text) async{
+    String input = searchController.value.text;
+    String url = "https://www.farmers-market.somee.com/api/Offers/search?input=$input&prefferedTown=${userData.town}";
+    Response<dynamic> response = await dio.get(url);
+    text = "";
+    setState(() {
+      searched = [];
+      for(int i = 0; i < response.data.length; i++){
+        searched.add(OfferComponent(offer: Offer.fromJson(response.data[i])));
+        searched.add(const SizedBox(height: 10,));
+      }
+    });
   }
 
   @override
@@ -49,6 +67,9 @@ class _DiscoverState extends State<Discover> {
                 } else if (snapshot.hasError) {
                 return const Text('Error loading image'); // Handle errors
                 } else {
+                  if(text != ""){
+                    search(text);
+                  }
                   if(searched.isNotEmpty){
                     offers = searched;
                   }

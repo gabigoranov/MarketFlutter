@@ -16,6 +16,7 @@ class OfferView extends StatelessWidget {
   String? imageLink;
   Future<void> getData() async{
     imageLink = await FirebaseService().getImageLink("offers/${offer.id}");
+    print(imageLink);
     owner = await UserService.instance.getWithId(offer.ownerId);
   }
 
@@ -98,7 +99,7 @@ class OfferView extends StatelessWidget {
                                         Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(builder: (context){
-                                            return Navigation();
+                                            return Navigation(index: 0,);
                                           }),
                                           ModalRoute.withName('/'),
                                         );

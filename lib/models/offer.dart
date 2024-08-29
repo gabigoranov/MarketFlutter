@@ -1,4 +1,3 @@
-import 'package:market/models/user.dart';
 
 class Offer {
   // public int Id { get; set; }
@@ -22,15 +21,16 @@ class Offer {
   Offer({required this.id, required this.title, required this.town, required this.pricePerKG, required this.ownerId, required this.offerTypeId, required this.description});
 
   factory Offer.fromJson(Map<String, dynamic> json) {
-    return Offer(
+    Offer res = Offer(
       id: json['id'] as int,
       title: json['title'] as String,
       town: json['town'] as String,
       description: json['description'] as String,
-      pricePerKG: json['pricePerKG'] as double,
+      pricePerKG: json['pricePerKG']+.0,
       ownerId: json['ownerId'] as String,
       offerTypeId: json['offerTypeId'] as int,
     );
+    return res;
   }
 
   // Method to convert User instance to a JSON map

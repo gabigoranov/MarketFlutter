@@ -11,23 +11,24 @@ import 'package:market/views/soon.dart';
 final storage = FlutterSecureStorage();
 
 class Navigation extends StatefulWidget {
-  Navigation({super.key});
+  int index;
+  String text;
+  Navigation({super.key, required this.index, this.text = ""});
 
   @override
-  State<Navigation> createState() => _NavigationState();
+  State<Navigation> createState() => _NavigationState(index, text);
 }
 
 class _NavigationState extends State<Navigation> {
-  PageController _pageController = PageController();
-  List<Widget> pages = [
-    Home(),
-    Discover(),
-    AddOfferView(),
-    Soon(),
-    Profile(userData: UserService.instance.user),
-  ];
+  _NavigationState(int index, String text){
+    _currentIndex = index;
+    text = text;
+  }
 
+  PageController _pageController = PageController();
+  String text = "";
   int _currentIndex = 0;
+
 
 
   @override
@@ -44,7 +45,12 @@ class _NavigationState extends State<Navigation> {
                 _currentIndex = index;
               });
             },
-            children: pages,
+            children: [
+              Home(),
+              Discover(text: text,),
+              AddOfferView(),
+              Profile(userData: UserService.instance.user),
+            ],
           ),
         ),
       ),
@@ -79,11 +85,6 @@ class _NavigationState extends State<Navigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.add, ),
             label: "New",
-    
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.paperplane_fill, ),
-            label: "Message",
     
           ),
           BottomNavigationBarItem(
