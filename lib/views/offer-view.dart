@@ -16,7 +16,6 @@ class OfferView extends StatelessWidget {
   String? imageLink;
   Future<void> getData() async{
     imageLink = await FirebaseService().getImageLink("offers/${offer.id}");
-    print(imageLink);
     owner = await UserService.instance.getWithId(offer.ownerId);
   }
 
