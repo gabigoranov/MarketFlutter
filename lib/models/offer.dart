@@ -1,4 +1,6 @@
 
+import 'package:market/models/stock.dart';
+
 class Offer {
   // public int Id { get; set; }
   // public string Title { get; set; }
@@ -16,9 +18,12 @@ class Offer {
   String description;
   double pricePerKG;
   String ownerId;
+  int stockId;
   int offerTypeId;
+  DateTime datePosted;
+  Stock stock;
   // Constructor
-  Offer({required this.id, required this.title, required this.town, required this.pricePerKG, required this.ownerId, required this.offerTypeId, required this.description});
+  Offer({required this.id, required this.title, required this.town, required this.pricePerKG, required this.ownerId, required this.stockId, required this.description, required this.datePosted, required this.offerTypeId, required this.stock});
 
   factory Offer.fromJson(Map<String, dynamic> json) {
     Offer res = Offer(
@@ -28,7 +33,10 @@ class Offer {
       description: json['description'] as String,
       pricePerKG: json['pricePerKG']+.0,
       ownerId: json['ownerId'] as String,
-      offerTypeId: json['offerTypeId'] as int,
+      datePosted: DateTime.parse(json['datePosted']),
+      stockId: json['stockId'] as int,
+      offerTypeId: json['stock']['offerTypeId'] as int,
+      stock: Stock.fromJson(json['stock']),
     );
     return res;
   }
@@ -41,9 +49,10 @@ class Offer {
       'title': title,
       'pricePerKG': pricePerKG,
       'ownerId': ownerId,
-      'offerTypeId': offerTypeId,
+      'stockId': stockId,
       'description': description,
       'town': town,
+      'datePosted': datePosted,
     };
   }
 }

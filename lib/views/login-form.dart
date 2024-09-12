@@ -17,6 +17,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm>{
   bool errorOccurred = false;
+  bool isSellerError = false;
 
   @override
   Widget build(BuildContext context){
@@ -61,6 +62,13 @@ class _LoginFormState extends State<LoginForm>{
                     style: TextStyle(color: Colors.red),
                   ), // Replace with your actual widget
                 ),
+                Visibility(
+                  visible: isSellerError, // Set to true when no error occurs
+                  child:  const Text(
+                    'Cannot login with a seller account',
+                    style: TextStyle(color: Colors.red),
+                  ), // Replace with your actual widget
+                ),
                 const SizedBox(height: 16.0,),
                 Row(
                   children: [
@@ -71,19 +79,25 @@ class _LoginFormState extends State<LoginForm>{
                         children: [
                           TextButton(
                             onPressed: () async {
-                              //try{
+                              try{
                                 await UserService.instance.login(emailController.value.text, passwordController.value.text);
-                                Navigator.push(context,
+                                Navigator.pushAndRemoveUntil(context,
                                   MaterialPageRoute(builder: (context){
                                     return Navigation(index: 0,);
                                   }),
+                                  (Route<dynamic> route) => false,
                                 );
-                              //}
-                              //catch(e){
-                              //  setState(() {
-                              //    errorOccurred = true;
-                              //  });
-                              //}
+                              }
+                              on FormatException{
+                                setState(() {
+                                  isSellerError = true;
+                                });
+                              }
+                              catch(e) {
+                                setState(() {
+                                  errorOccurred = true;
+                                });
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,

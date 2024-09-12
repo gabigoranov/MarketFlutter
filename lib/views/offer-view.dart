@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:market/models/order.dart';
 import 'package:market/services/offer-service.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/services/firebase-service.dart';
@@ -7,6 +8,7 @@ import 'package:market/models/offer.dart';
 import 'package:market/services/user-service.dart';
 import 'package:market/models/user.dart';
 import 'package:market/views/navigation.dart';
+import 'package:market/views/purchase_view.dart';
 
 class OfferView extends StatelessWidget {
   Offer offer;
@@ -114,7 +116,14 @@ class OfferView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
 
-                                TextButton(onPressed: (){},
+                                TextButton(
+                                  onPressed: (){
+                                    Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return PurchaseView(model: Order(offerId: offer.id, buyerId: UserService.instance.user.id, sellerId: offer.ownerId), offer: offer);
+                                      }),
+                                    );
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xff40B886),
                                     foregroundColor: Colors.white,

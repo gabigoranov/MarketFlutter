@@ -37,7 +37,6 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
         else if(isAuthenticated){
           return Navigation(index: 0,);
         }
-
         return const Landing();
       },
     );

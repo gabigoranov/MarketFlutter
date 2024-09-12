@@ -1,6 +1,8 @@
 
 import 'package:market/models/offer.dart';
 
+import 'order.dart';
+
 class User{
   String id;
   String firstName;
@@ -10,24 +12,24 @@ class User{
   String phoneNumber;
   String password;
   String description;
-  List<Offer> offers;
   double rating;
   String town;
   bool isSeller;
+  List<Order> boughtOrders;
 
   // Constructor
   User({required this.id, required this.firstName, required this.lastName,
         required this.age, required this.email, this.rating = 0,
         required this.phoneNumber, required this.password, required this.description,
-        required this.offers, required this.town, required this.isSeller});
+        required this.town, required this.isSeller, required this.boughtOrders});
 
   // Factory constructor to create a User instance from a JSON map
   factory User.fromJson(Map<String, dynamic> json) {
-
-    List<Offer> converted = [];
-    if(json['offers'].length > 0){
-      for(int i = 0; i < json['offers'].length; i++){
-        converted.add(Offer.fromJson(json['offers'][i]));
+    List<Order> converted = [];
+    print(json);
+    if(json['boughtOrders'].length > 0){
+      for(int i = 0; i < json['boughtOrders'].length; i++){
+        converted.add(Order.fromJson(json['boughtOrders'][i]));
       }
     }
     User res = User(
@@ -40,9 +42,9 @@ class User{
       phoneNumber: json['phoneNumber'] as String,
       password: json['password'] as String,
       description: json['description'] as String,
-      offers: converted,
       town: json['town'] as String,
       isSeller: json['isSeller'] as bool,
+      boughtOrders: converted,
     );
     return res;
   }
@@ -59,7 +61,6 @@ class User{
       'phoneNumber': phoneNumber,
       'password': password,
       'description': description,
-      'offers': offers,
       'town': town,
       'isSeller': isSeller,
     };

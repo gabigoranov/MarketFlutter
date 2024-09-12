@@ -30,12 +30,8 @@ class _ProfileState extends State<Profile> {
   Future<String> getData() async{
     await Future.delayed(const Duration(milliseconds: 500), () async{
       FirebaseService fbService = FirebaseService();
-      networkImageURL = await fbService.getImageLink("profiles/${userData.id}.jpg");
+      networkImageURL = await fbService.getImageLink("profiles/${userData.email}");
       userOffers = [];
-      for(int i = 0; i < userData.offers.length; i++){
-        userOffers.add(OfferComponent(offer: userData.offers[i]));
-        userOffers.add(const SizedBox(height: 10,));
-      }
     });
     return networkImageURL;
 

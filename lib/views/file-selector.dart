@@ -44,11 +44,6 @@ class _ImageCaptureState extends State<ImageCapture> {
     uploader.uploadFile(_imageFile, imagePath, userData.id);
   }
 
-  Future<void> uploadOfferImage() async{
-    await _pickImage();
-    final uploader = FirebaseService();
-    uploader.uploadFile(_imageFile, imagePath, UserService.instance.user.offers.last.id.toString());
-  }
 
 
 
@@ -62,9 +57,6 @@ class _ImageCaptureState extends State<ImageCapture> {
             onPressed: () async {
               if(imagePath == "profiles"){
                 await uploadProfileImage();
-              }
-              else if(imagePath == "offers"){
-                await uploadOfferImage();
               }
               Navigator.pushAndRemoveUntil(
                 context,

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/user-service.dart';
-import 'package:market/views/add-offer.dart';
 import 'package:market/views/discover.dart';
+import 'package:market/views/history.dart';
 import 'package:market/views/home.dart';
 import 'package:market/views/profile.dart';
 import 'package:market/views/soon.dart';
@@ -48,7 +48,7 @@ class _NavigationState extends State<Navigation> {
             children: [
               Home(),
               Discover(text: text,),
-              AddOfferView(),
+              History(),
               Profile(userData: UserService.instance.user),
             ],
           ),
@@ -83,8 +83,8 @@ class _NavigationState extends State<Navigation> {
     
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add, ),
-            label: "New",
+            icon: Icon(Icons.history, ),
+            label: "History",
     
           ),
           BottomNavigationBarItem(

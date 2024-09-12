@@ -28,6 +28,9 @@ final class UserService {
     Response<dynamic> response = await dio.get(url);
 
     User user =  User.fromJson(response.data);
+    if(user.isSeller){
+      throw FormatException();
+    }
 
     await storage.write(key: "user_data", value: jsonEncode([user.email, user.password]));
     _user = user;

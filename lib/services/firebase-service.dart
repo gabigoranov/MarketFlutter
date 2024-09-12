@@ -5,7 +5,7 @@ class FirebaseService{
   final storage = FirebaseStorage.instance;
 
   Future<void> uploadFile(File? file, String path, String id) async {
-    final Reference ref = storage.ref().child('${path}/${id}.jpg');
+    final Reference ref = storage.ref().child('${path}/${id}');
     await ref.putFile(file!);
   }
 

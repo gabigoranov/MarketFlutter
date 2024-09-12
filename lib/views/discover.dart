@@ -7,6 +7,8 @@ import 'package:market/models/offer.dart';
 import 'package:market/services/user-service.dart';
 import 'package:market/models/user.dart';
 
+import '../models/stock.dart';
+
 final dio = Dio();
 
 class Discover extends StatefulWidget {
@@ -65,7 +67,8 @@ class _DiscoverState extends State<Discover> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                 return Loading(); // Show a loading indicator
                 } else if (snapshot.hasError) {
-                return const Text('Error loading image'); // Handle errors
+                  print(snapshot.error);
+                  return const Text('Error loading image'); // Handle errors
                 } else {
                   if(text != ""){
                     search(text);
@@ -131,4 +134,5 @@ class _DiscoverState extends State<Discover> {
       ),
     );
   }
+
 }

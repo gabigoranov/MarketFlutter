@@ -184,14 +184,15 @@ class _LoginFormState extends State<RegisterForm> {
                                       firstName: _firstNameController.value.text,
                                       lastName: _lastNameController.value.text,
                                       age:  int.parse(_ageController.value.text),
-                                      offers: [],
                                       description: _descriptionController.value.text,
                                       password: _passwordController.value.text,
                                       phoneNumber: _phoneController.value.text,
                                       rating: 0,
                                       town: _townController.value.text,
                                       email: _emailController.value.text,
-                                      isSeller: false));
+                                      isSeller: false,
+                                      boughtOrders: [],
+                                  ));
                                   await UserService.instance.login(_emailController.value.text, _passwordController.value.text);
                                   Navigator.push(context,
                                     MaterialPageRoute(builder: (context){
