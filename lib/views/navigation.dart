@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/services/user_service.dart';
 import 'package:market/views/discover.dart';
 import 'package:market/views/history.dart';
 import 'package:market/views/home.dart';
 import 'package:market/views/profile.dart';
-import 'package:market/views/soon.dart';
 
 final storage = FlutterSecureStorage();
 
 class Navigation extends StatefulWidget {
-  int index;
-  String text;
-  Navigation({super.key, required this.index, this.text = ""});
+  final int index;
+  final String text;
+  const Navigation({super.key, required this.index, this.text = ""});
 
   @override
   State<Navigation> createState() => _NavigationState(index, text);

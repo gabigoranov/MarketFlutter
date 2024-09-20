@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/views/landing.dart';
 import 'package:market/views/loading.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/services/user_service.dart';
 import 'package:market/views/navigation.dart';
+import 'package:market/views/onboarding.dart';
 
-final storage = FlutterSecureStorage();
+const storage = FlutterSecureStorage();
 
 class AuthenticationWrapper extends StatefulWidget {
   const AuthenticationWrapper({super.key});
@@ -35,9 +36,9 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
           return Loading();
         }
         else if(isAuthenticated){
-          return Navigation(index: 0,);
+          return const Navigation(index: 0,);
         }
-        return const Landing();
+        return const Onboarding();
       },
     );
   }

@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:market/models/offer.dart';
-import 'package:market/services/user-service.dart';
-
+import 'package:market/services/user_service.dart';
 import '../models/order.dart';
 
 final dio = Dio();

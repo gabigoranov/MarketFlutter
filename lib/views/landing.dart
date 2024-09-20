@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:market/views/login-form.dart';
-import 'package:market/views/register-form.dart';
+import 'package:market/views/login_form.dart';
+import 'package:market/views/register_form.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});

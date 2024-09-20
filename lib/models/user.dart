@@ -1,6 +1,4 @@
 
-import 'package:market/models/offer.dart';
-
 import 'order.dart';
 
 class User{

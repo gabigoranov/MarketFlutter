@@ -1,10 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 
 class SearchTag extends StatelessWidget {
-  String text;
-  SearchTag({super.key, required this.text});
+  final String text;
+  const SearchTag({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

@@ -1,17 +1,18 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market/components/offer-component.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:market/services/authentication_wrapper.dart';
 import 'package:market/views/landing.dart';
 import 'package:market/views/loading.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
-import 'package:market/services/firebase-service.dart';
+import 'package:market/services/firebase_service.dart';
 
 
 class Profile extends StatefulWidget {
-  User userData;
-  Profile({super.key, required this.userData});
+  final User userData;
+  const Profile({super.key, required this.userData});
 
   @override
   State<Profile> createState() => _ProfileState(userData);
@@ -118,12 +119,13 @@ class _ProfileState extends State<Profile> {
                                   value: 'logout',
                                   child: TextButton(
                                     onPressed: () {
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
+                                      var storage = const FlutterSecureStorage();
+                                      storage.delete(key: "user_data");
+                                      Navigator.pushAndRemoveUntil(context,
                                         MaterialPageRoute(builder: (context){
-                                          return const Landing();
+                                          return const AuthenticationWrapper();
                                         }),
-                                        ModalRoute.withName('/'),
+                                        (Route<dynamic> route) => false,
                                       );
                                     },
                                     child: const Text('Logout')

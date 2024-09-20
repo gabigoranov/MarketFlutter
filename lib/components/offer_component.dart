@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:market/models/offer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:market/views/offer-view.dart';
+import 'package:market/views/offer_view.dart';
 
 
 class OfferComponent extends StatelessWidget {
-  Offer offer;
+  final Offer offer;
   OfferComponent({super.key, required this.offer});
-  Map<int, Widget> offerTypes = {
+  final Map<int, Widget> offerTypes = {
     1: SvgPicture.asset(
       'assets/icons/apple.svg',
       width: 30,  // Set the desired width
@@ -45,7 +45,7 @@ class OfferComponent extends StatelessWidget {
       color: Colors.white, // Optionally set a color
     ),
   };
-  Map<int, Color> colors = {
+  final Map<int, Color> colors = {
     1: const Color(0xffF67979),
     2: const Color(0xffFFE380),
     3: const Color(0xffF3E1A3),

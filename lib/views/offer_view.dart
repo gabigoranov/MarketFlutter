@@ -1,21 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market/models/order.dart';
-import 'package:market/services/offer-service.dart';
+import 'package:market/services/offer_service.dart';
 import 'package:market/views/loading.dart';
-import 'package:market/services/firebase-service.dart';
+import 'package:market/services/firebase_service.dart';
 import 'package:market/models/offer.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
 import 'package:market/views/navigation.dart';
 import 'package:market/views/purchase_view.dart';
 
 class OfferView extends StatelessWidget {
-  Offer offer;
+  final Offer offer;
   OfferView({super.key, required this.offer});
 
   User? owner;
   String? imageLink;
+
   Future<void> getData() async{
     imageLink = await FirebaseService().getImageLink("offers/${offer.id}");
     owner = await UserService.instance.getWithId(offer.ownerId);

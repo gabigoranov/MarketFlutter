@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/services/user_service.dart';
 import 'package:market/views/navigation.dart';
 
 final dio = Dio();

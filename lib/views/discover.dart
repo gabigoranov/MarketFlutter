@@ -1,19 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market/components/offer-component.dart';
+import 'package:market/components/offer_component.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/models/offer.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
-
-import '../models/stock.dart';
 
 final dio = Dio();
 
 class Discover extends StatefulWidget {
-  String text;
-  Discover({super.key, this.text = ""});
+  final String text;
+  const Discover({super.key, this.text = ""});
 
   @override
   State<Discover> createState() => _DiscoverState(text);

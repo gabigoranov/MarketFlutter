@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/models/offer.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/services/user_service.dart';
 
 final storage = FlutterSecureStorage();
 final dio = Dio();

@@ -2,9 +2,12 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/services/authentication-wrapper.dart';
+import 'package:market/services/authentication_wrapper.dart';
+import 'package:market/views/onboarding.dart';
+import 'package:signalr_netcore/hub_connection.dart';
+import 'package:signalr_netcore/hub_connection_builder.dart';
 
-final storage = FlutterSecureStorage();
+const storage = FlutterSecureStorage();
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -14,7 +17,9 @@ class MyHttpOverrides extends HttpOverrides{
   }
 }
 
-void main() async{
+void main() async {
+  
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -27,7 +32,7 @@ void main() async{
   );
 
 
-  runApp( MyApp() );
+  runApp( const MyApp() );
 }
 
 
@@ -40,6 +45,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String serverUrl = "https://farmers-market.somee.com/notificationHub";
+  // Creates the connection by using the HubConnectionBuilder.
+  late HubConnection hubConnection;
+
+
+  @override
+  void initState(){
+    super.initState();
+    hubConnection = HubConnectionBuilder().withUrl(serverUrl).build();
+    initSignalR();
+  }
+
+  void initSignalR() async{
+    await hubConnection.start();
+    print('connected to signalr');
+    hubConnection.on('ReceiveMessage', (arguments) {
+      print(arguments);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

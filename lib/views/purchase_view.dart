@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:market/services/order_service.dart';
-import 'package:market/views/home.dart';
-
 import '../models/offer.dart';
 import '../models/order.dart';
 
 class PurchaseView extends StatelessWidget {
-  Order model;
-  Offer offer;
+  final Order model;
+  final Offer offer;
   PurchaseView({super.key, required this.model, required this.offer});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _quantityController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

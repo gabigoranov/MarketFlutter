@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market/components/discover-category-component.dart';
+import 'package:market/components/discover_category_component.dart';
 import 'package:market/components/search_tag.dart';
-import 'package:market/views/discover.dart';
-
-import 'navigation.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key,});
+  const Home({super.key,});
 
   @override
   State<Home> createState() => _HomeState();

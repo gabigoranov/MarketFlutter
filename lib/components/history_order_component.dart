@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/order.dart';
 
 class HistoryOrderComponent extends StatelessWidget {
-  Order order;
-  HistoryOrderComponent({super.key, required this.order});
+  final Order order;
+  const HistoryOrderComponent({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:market/views/file-selector.dart';
-import 'package:market/services/user-service.dart';
+import 'package:market/views/file_selector.dart';
+import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
 
 final dio = Dio();
@@ -93,7 +93,7 @@ class _LoginFormState extends State<RegisterForm> {
                       }
                       try{
                         int parsed = int.parse(value);
-                        if(int.parse(value) < 18){
+                        if(parsed < 18){
                           return "Must be at least 18 years old!";
                         }
                       }

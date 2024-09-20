@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DiscoverCategoryComponent extends StatelessWidget {
-  String title;
-  String imgURL;
-  int color;
-  DiscoverCategoryComponent({super.key, required this.title, required this.imgURL, required this.color});
+  final String title;
+  final String imgURL;
+  final int color;
+  const DiscoverCategoryComponent({super.key, required this.title, required this.imgURL, required this.color});
 
   @override
   Widget build(BuildContext context) {
