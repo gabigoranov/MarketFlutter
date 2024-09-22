@@ -27,6 +27,9 @@ class _ProfileState extends State<Profile> {
   }
   List<Widget> userOffers = [];
 
+  void cacheImage(String path) async{
+    await precacheImage(NetworkImage(path), context);
+  }
 
   Future<String> getData() async{
     await Future.delayed(const Duration(milliseconds: 500), () async{
@@ -64,8 +67,7 @@ class _ProfileState extends State<Profile> {
                             maxHeight: 400,
                             //maximum width set to 100% of width
                           ),
-                          child: Container(
-
+                          child: SizedBox(
                             height: MediaQuery.of(context).size.height*0.6,
                             child: Image.network(networkImageURL,
                               width: double.infinity,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:market/services/order_service.dart';
+import 'package:market/services/user_service.dart';
 import '../models/offer.dart';
 import '../models/order.dart';
+import '../models/user.dart';
 
 class PurchaseView extends StatelessWidget {
   final Order model;
@@ -11,6 +13,12 @@ class PurchaseView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+
+  String generateTitle(double quantity, Offer offer){
+    User user = UserService.instance.user;
+    String res = "${user.firstName} ordered ${quantity}KG of ${offer.title}";
+    return res;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +79,7 @@ class PurchaseView extends StatelessWidget {
                                   model.quantity = double.parse(_quantityController.value.text);
                                   model.price = model.quantity*offer.pricePerKG;
                                   model.address = _addressController.value.text;
+                                  model.title = generateTitle(model.quantity, offer);
                                   await OrderService.instance.order(model);
                                   Navigator.pop(context);
                                 }

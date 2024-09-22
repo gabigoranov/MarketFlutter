@@ -37,7 +37,7 @@ class _OnboardingState extends State<Onboarding> {
                 },
               ),
               items: data.map((e) {
-                return Image.asset(e["image"], width: double.infinity, fit: BoxFit.cover,);
+                return Image.asset(e["image"], width: double.infinity, fit: BoxFit.fitWidth,);
               }).toList(),
             ),
             Align(
@@ -49,6 +49,23 @@ class _OnboardingState extends State<Onboarding> {
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
                   color: Color(0xffFEFEFE),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black54,
+                      offset: Offset(
+                        5.0,
+                        5.0,
+                      ),
+                      blurRadius: 10.0,
+                      spreadRadius: 2.0,
+                    ), //BoxShadow
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(0.0, 0.0),
+                      blurRadius: 0.0,
+                      spreadRadius: 0.0,
+                    ), //BoxShadow
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,38 +89,53 @@ class _OnboardingState extends State<Onboarding> {
 
                       ),
                     ),
-                    const SizedBox(height: 44,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            if(currentSlider==0) return;
-                            setState(() {
-                              currentSlider -= 1;
-                            });
-                          },
-                          child: const Text("Back"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            if(currentSlider == data.length-1) {
-                              Navigator.pushAndRemoveUntil(context,
-                                MaterialPageRoute(builder: (context){
-                                  return const Landing();
-                                }),
+
+
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 44,),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: const EdgeInsets.all(30),
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+                  color: Color(0xffFEFEFE),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        if(currentSlider==0) return;
+                        setState(() {
+                          currentSlider -= 1;
+                          _carouselController.animateToPage(currentSlider);
+                        });
+                      },
+                      child: const Text("Back"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if(currentSlider == data.length-1) {
+                          Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (context){
+                              return const Landing();
+                            }),
                                 (Route<dynamic> route) => false,
-                              );
-                              return;
-                            }
-                            setState(() {
-                              currentSlider += 1;
-                            });
-                          },
-                          child: const Text("Next"),
-                        ),
-                      ],
-                    )
+                          );
+                          return;
+                        }
+                        setState(() {
+                          currentSlider += 1;
+                          _carouselController.animateToPage(currentSlider);
+                        });
+                      },
+                      child: const Text("Next"),
+                    ),
                   ],
                 ),
               ),

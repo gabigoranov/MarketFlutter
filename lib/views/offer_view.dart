@@ -45,105 +45,107 @@ class OfferView extends StatelessWidget {
                 backgroundColor: Colors.white,
               ),
               body: SafeArea(
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(0,0,0,16),
-                  margin:  const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: <Widget>[
-                          Container(
-                            constraints: const BoxConstraints(
-                              maxHeight: 400,
-                              //maximum width set to 100% of width
-                            ),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height*0.6,
-                              child: Image.network(imageLink!,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    // Image is fully loaded
-                                    return child;
-                                  } else {
-                                    // Display a loading indicator (e.g., CircularProgressIndicator)
-                                    return const Center(child: CircularProgressIndicator());
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                          Positioned.fill(
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Image.asset("assets/clouds.png",
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Center(
-                        child: Column(
-                          children: [
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(0,0,0,16),
+                    margin:  const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: <Widget>[
                             Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(offer.title, style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w900),),
-                                  Visibility(
-                                    visible: offer.ownerId == UserService.instance.user.id,
-                                    child: IconButton(
-                                      onPressed: () async{
-                                        await OfferService.instance.delete(offer.id);
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(builder: (context){
-                                            return Navigation(index: 0,);
-                                          }),
-                                          ModalRoute.withName('/'),
-                                        );
-                                      },
-                                      icon: const Icon(CupertinoIcons.delete_solid),
-                                    ),
-                                  ),
-                                ],
+                              constraints: const BoxConstraints(
+                                maxHeight: 400,
+                                //maximum width set to 100% of width
+                              ),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height*0.6,
+                                child: Image.network(imageLink!,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      // Image is fully loaded
+                                      return child;
+                                    } else {
+                                      // Display a loading indicator (e.g., CircularProgressIndicator)
+                                      return const Center(child: CircularProgressIndicator());
+                                    }
+                                  },
+                                ),
                               ),
                             ),
-                            Container(height: MediaQuery.of(context).size.height*0.25,width: MediaQuery.of(context).size.width*0.9, child: Text(offer.description, textAlign: TextAlign.left,style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black54),)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-
-                                TextButton(
-                                  onPressed: (){
-                                    Navigator.push(context,
-                                      MaterialPageRoute(builder: (context){
-                                        return PurchaseView(model: Order(offerId: offer.id, buyerId: UserService.instance.user.id, sellerId: offer.ownerId), offer: offer);
-                                      }),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xff40B886),
-                                    foregroundColor: Colors.white,
-                                    shadowColor: Colors.black,
-                                    elevation: 4.0,
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 12),
-                                    child: Text("Order Now", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),),
-                                  ),
+                            Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Image.asset("assets/clouds.png",
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
                                 ),
-                                const SizedBox(width: 16,),
-                                Text("${offer.pricePerKG}\nlv/kg", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, height: 0.9, ),textAlign: TextAlign.right,),
-                              ],
-                            )
+                              ),
+                            ),
                           ],
                         ),
-                      )
-                    ],
+                        Center(
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(offer.title, style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w900),),
+                                    Visibility(
+                                      visible: offer.ownerId == UserService.instance.user.id,
+                                      child: IconButton(
+                                        onPressed: () async{
+                                          await OfferService.instance.delete(offer.id);
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(builder: (context){
+                                              return Navigation(index: 0,);
+                                            }),
+                                            ModalRoute.withName('/'),
+                                          );
+                                        },
+                                        icon: const Icon(CupertinoIcons.delete_solid),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(height: MediaQuery.of(context).size.height*0.25,width: MediaQuery.of(context).size.width*0.9, child: Text(offer.description, textAlign: TextAlign.left,style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black54),)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                  
+                                  TextButton(
+                                    onPressed: (){
+                                      Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return PurchaseView(model: Order(offerId: offer.id, buyerId: UserService.instance.user.id, sellerId: offer.ownerId), offer: offer);
+                                        }),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xff40B886),
+                                      foregroundColor: Colors.white,
+                                      shadowColor: Colors.black,
+                                      elevation: 4.0,
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 12),
+                                      child: Text("Order Now", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16,),
+                                  Text("${offer.pricePerKG}\nlv/kg", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, height: 0.9, ),textAlign: TextAlign.right,),
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

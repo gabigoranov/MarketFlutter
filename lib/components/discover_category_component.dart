@@ -13,7 +13,7 @@ class DiscoverCategoryComponent extends StatelessWidget {
       width: MediaQuery.of(context).size.width*0.9,
       height: MediaQuery.of(context).size.height*0.11,
       decoration: BoxDecoration(
-        color: Color(color),
+        color: Color(color).withOpacity(0.85),
           boxShadow: const [
             BoxShadow(
               color: Colors.black38,

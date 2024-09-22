@@ -16,8 +16,19 @@ class History extends StatelessWidget {
     }
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: widgets,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text("Order History:", style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),),
+              Column(
+                  children: widgets.reversed.toList(),
+              ),
+            ],
+          ),
+        ),
       )
     );
   }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/user_service.dart';
+import 'package:market/views/loading.dart';
 import 'package:market/views/navigation.dart';
 
 final dio = Dio();
 final storage = FlutterSecureStorage();
-
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -19,11 +19,39 @@ class _LoginFormState extends State<LoginForm>{
   bool errorOccurred = false;
   bool isSellerError = false;
 
+
+  Future<bool> login(String email, String password) async{
+
+    try{
+      await UserService.instance.login(email, password);
+      Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context){
+          return Navigation(index: 0,);
+        }), (Route<dynamic> route) => false,
+      );
+    }
+    on FormatException{
+      setState(() {
+        isSellerError = true;
+      });
+      return false;
+    }
+    catch(e) {
+      setState(() {
+        errorOccurred = true;
+      });
+      return false;
+    }
+    return true;
+  }
+
+
   @override
   Widget build(BuildContext context){
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
 
     return Scaffold(
       appBar: AppBar(
@@ -79,25 +107,17 @@ class _LoginFormState extends State<LoginForm>{
                         children: [
                           TextButton(
                             onPressed: () async {
-                              try{
-                                await UserService.instance.login(emailController.value.text, passwordController.value.text);
-                                Navigator.pushAndRemoveUntil(context,
-                                  MaterialPageRoute(builder: (context){
-                                    return Navigation(index: 0,);
-                                  }),
-                                  (Route<dynamic> route) => false,
-                                );
+                              Navigator.push(context,
+                                MaterialPageRoute(builder: (context){
+                                  return Loading();
+                                }),
+                              );
+                              bool res = await login(emailController.value.text, passwordController.value.text);
+                              if(res == false)
+                              {
+                                Navigator.pop(context);
                               }
-                              on FormatException{
-                                setState(() {
-                                  isSellerError = true;
-                                });
-                              }
-                              catch(e) {
-                                setState(() {
-                                  errorOccurred = true;
-                                });
-                              }
+
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
@@ -120,3 +140,4 @@ class _LoginFormState extends State<LoginForm>{
     );
   }
 }
+

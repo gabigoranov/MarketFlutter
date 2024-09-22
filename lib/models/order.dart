@@ -8,10 +8,11 @@ class Order{
   String buyerId;
   String sellerId;
   DateTime? dateOrdered;
+  String title;
 
   Order({ this.id=0,  this.quantity=0, this.price=0,
      this.address, required this.offerId,
-    required this.buyerId, required this.sellerId, this.dateOrdered});
+    required this.buyerId, required this.sellerId, this.dateOrdered, this.title = "none"});
 
   factory Order.fromJson(Map<String, dynamic> json) {
     Order res = Order(
@@ -23,6 +24,7 @@ class Order{
       buyerId: json['buyerId'] as String,
       sellerId: json['sellerId'] as String,
       dateOrdered: DateTime.parse(json['dateOrdered']),
+      title: json['title'] as String,
     );
     return res;
   }
@@ -37,6 +39,7 @@ class Order{
       'offerId': offerId,
       'buyerId': buyerId,
       'sellerId': sellerId,
+      'title': title,
     };
   }
 }

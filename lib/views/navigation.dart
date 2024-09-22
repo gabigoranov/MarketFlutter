@@ -8,12 +8,12 @@ import 'package:market/views/home.dart';
 import 'package:market/views/profile.dart';
 
 final storage = FlutterSecureStorage();
+PageController _pageController = PageController();
 
 class Navigation extends StatefulWidget {
   final int index;
   final String text;
   const Navigation({super.key, required this.index, this.text = ""});
-
   @override
   State<Navigation> createState() => _NavigationState(index, text);
 }
@@ -24,7 +24,6 @@ class _NavigationState extends State<Navigation> {
     text = text;
   }
 
-  PageController _pageController = PageController();
   String text = "";
   int _currentIndex = 0;
 
