@@ -2,11 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:market/services/cart-service.dart';
 import 'package:market/views/landing.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/services/user_service.dart';
 import 'package:market/views/navigation.dart';
 import 'package:market/views/onboarding.dart';
+
+import '../models/order.dart';
 
 const storage = FlutterSecureStorage();
 
@@ -26,6 +29,11 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
       await UserService.instance.login(json[0], json[1]); //maybe remove
       isAuthenticated = true;
     }
+    final String cartRead = await storage.read(key: "user_cart") ?? '';
+    List<dynamic> jsonData = jsonDecode(cartRead);
+    List<Order> items = jsonData.map((orderJson) => Order.fromStorageJson(orderJson)).toList();
+    CartService.instance.cart = items;
+
   }
 
   @override

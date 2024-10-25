@@ -41,7 +41,7 @@ class _ImageCaptureState extends State<ImageCapture> {
     await _pickImage();
     User userData = UserService.instance.user;
     final uploader = FirebaseService();
-    uploader.uploadFile(_imageFile, imagePath, userData.id);
+    uploader.uploadFile(_imageFile, imagePath, userData.email);
   }
 
 

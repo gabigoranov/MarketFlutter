@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:market/models/review.dart';
 import 'package:market/models/stock.dart';
 
 class Offer {
@@ -22,8 +25,10 @@ class Offer {
   int offerTypeId;
   DateTime datePosted;
   Stock stock;
+  List<Review>? reviews;
+  double avgRating;
   // Constructor
-  Offer({required this.id, required this.title, required this.town, required this.pricePerKG, required this.ownerId, required this.stockId, required this.description, required this.datePosted, required this.offerTypeId, required this.stock});
+  Offer({required this.id, required this.title, required this.town, required this.pricePerKG, required this.ownerId, required this.stockId, required this.description, required this.avgRating, required this.datePosted, required this.offerTypeId, required this.stock, this.reviews});
 
   factory Offer.fromJson(Map<String, dynamic> json) {
     Offer res = Offer(
@@ -36,7 +41,9 @@ class Offer {
       datePosted: DateTime.parse(json['datePosted']),
       stockId: json['stockId'] as int,
       offerTypeId: json['stock']['offerTypeId'] as int,
+      avgRating: json['avgRating']+.0,
       stock: Stock.fromJson(json['stock']),
+      reviews: List<Review>.from(json['reviews'].map((model)=> Review.fromJson(model))),
     );
     return res;
   }
@@ -53,6 +60,7 @@ class Offer {
       'description': description,
       'town': town,
       'datePosted': datePosted,
+      'reviews': reviews,
     };
   }
 }

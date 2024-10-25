@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 import 'package:market/models/order.dart';
 import 'package:market/services/offer_service.dart';
 import 'package:market/views/loading.dart';
@@ -8,11 +9,14 @@ import 'package:market/models/offer.dart';
 import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
 import 'package:market/views/navigation.dart';
+import 'package:market/views/offer_reviews_view.dart';
 import 'package:market/views/purchase_view.dart';
 
 class OfferView extends StatelessWidget {
   final Offer offer;
+
   OfferView({super.key, required this.offer});
+
 
   User? owner;
   String? imageLink;
@@ -113,16 +117,38 @@ class OfferView extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Container(height: MediaQuery.of(context).size.height*0.25,width: MediaQuery.of(context).size.width*0.9, child: Text(offer.description, textAlign: TextAlign.left,style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black54),)),
+                              SizedBox(height: MediaQuery.of(context).size.height*0.25,width: MediaQuery.of(context).size.width*0.9, child: Text(offer.description, textAlign: TextAlign.left,style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black54),)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                  
+                                  StarRating(
+                                    rating: (2*offer.avgRating).floorToDouble()/2,
+                                    allowHalfRating: true,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    size: 24,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: (){
+                                      Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return OfferReviewsView(reviews: offer.reviews!, offerId: offer.id,);
+                                        }),
+                                      );
+                                    },
+                                    icon: const Icon(CupertinoIcons.bubble_left_bubble_right_fill,),
+                                  ),
+                                  const SizedBox(width: 16,),
                                   TextButton(
                                     onPressed: (){
                                       Navigator.push(context,
                                         MaterialPageRoute(builder: (context){
-                                          return PurchaseView(model: Order(offerId: offer.id, buyerId: UserService.instance.user.id, sellerId: offer.ownerId), offer: offer);
+                                          return PurchaseView(model: Order(offerId: offer.id, buyerId: UserService.instance.user.id, sellerId: offer.ownerId, isDelivered: false), offer: offer);
                                         }),
                                       );
                                     },

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/authentication_wrapper.dart';
+import 'package:market/views/cart-view.dart';
 import 'package:market/views/landing.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/services/user_service.dart';
@@ -65,9 +66,10 @@ class _ProfileState extends State<Profile> {
                         Container(
                           constraints: const BoxConstraints(
                             maxHeight: 400,
-                            //maximum width set to 100% of width
+
                           ),
-                          child: SizedBox(
+
+                          child: Container(
                             height: MediaQuery.of(context).size.height*0.6,
                             child: Image.network(networkImageURL,
                               width: double.infinity,
@@ -174,14 +176,8 @@ class _ProfileState extends State<Profile> {
                             decoration: BoxDecoration(
                               color: const Color(0xff40B886),
                               borderRadius: BorderRadius.circular(25),
-                              boxShadow: const[
-                                BoxShadow(
-                                  color: Colors.black38,
-                                  spreadRadius: 0,
-                                  blurRadius: 0.6,
-                                  offset: Offset(0, 1), // changes position of shadow
-                                ),
-                              ],
+
+
                             ),
                             child: const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
@@ -204,7 +200,16 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ],
                               ),
-                              child: Center(child: Icon(CupertinoIcons.shopping_cart, color: Theme.of(context).colorScheme.primary, size: 54,)),
+                              child: Center(child: IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context){
+                                      return CartView();
+                                    }),
+                                  );
+                                },
+                                icon: Icon(CupertinoIcons.shopping_cart, color: Theme.of(context).colorScheme.primary, size: 54,))),
                             ),
                           ),
                           const SizedBox(width: 14,),

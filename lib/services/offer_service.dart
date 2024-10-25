@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/models/offer.dart';
 import 'package:market/services/user_service.dart';
+
+import '../components/offer_component.dart';
 
 final storage = FlutterSecureStorage();
 final dio = Dio();
@@ -12,6 +15,8 @@ final class OfferService {
     return instance;
   }
   OfferService._internal();
+  List<Offer> loadedOffers = [];
+  List<Widget> offerWidgets = [];
   static final OfferService instance = OfferService._internal();
 
 
@@ -26,5 +31,22 @@ final class OfferService {
     const url = 'https://farmers-market.somee.com/api/edit/';
     Response<dynamic> response = await dio.post(url, data: jsonEncode(offer));
     return response.data;
+  }
+
+  Future<void> loadOffers() async{
+    String url = 'https://farmers-market.somee.com/api/Offers/getAll';
+    Response<dynamic> response = await dio.get(url);
+    for(int i = 0; i < response.data.length; i++){
+      loadedOffers.add(Offer.fromJson(response.data[i]));
+    }
+    getData();
+  }
+
+  void getData() {
+    offerWidgets = [];
+    for(int i = 0; i < OfferService.instance.loadedOffers.length; i++){
+      offerWidgets.add(OfferComponent(offer: OfferService.instance.loadedOffers[i]));
+      offerWidgets.add(const SizedBox(height: 10,));
+    }
   }
 }

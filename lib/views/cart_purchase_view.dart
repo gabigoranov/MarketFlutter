@@ -14,10 +14,10 @@ import '../services/purchase-service.dart';
 const storage = FlutterSecureStorage();
 
 
-class PurchaseView extends StatelessWidget {
+class CartPurchaseView extends StatelessWidget {
   final Order model;
   final Offer offer;
-  PurchaseView({super.key, required this.model, required this.offer});
+  CartPurchaseView({super.key, required this.model, required this.offer});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _quantityController = TextEditingController();

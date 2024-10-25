@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 import 'package:market/models/offer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:market/views/offer_view.dart';
@@ -65,11 +66,11 @@ class OfferComponent extends StatelessWidget {
           color: const Color(0xffFFFFFF),
           boxShadow: const [
             BoxShadow(
-              color: Colors.black38,
+              color: Colors.black12,
               spreadRadius: 0,
-              blurRadius: 0.6,
-              offset: Offset(0, 1), // changes position of shadow
-            ),
+              blurRadius: 15,
+              offset: Offset(5, 5), // Shadow moved to the right and bottom
+            )
           ],
           borderRadius: BorderRadius.circular(25),
         ),
@@ -86,11 +87,11 @@ class OfferComponent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   boxShadow: const[
                     BoxShadow(
-                      color: Colors.black38,
-                      spreadRadius: 1.0,
-                      blurRadius: 0.6,
-                      offset: Offset(0.5, 1), // changes position of shadow
-                    ),
+                      color: Colors.black12,
+                      spreadRadius: 0,
+                      blurRadius: 15,
+                      offset: Offset(5, 5), // Shadow moved to the right and bottom
+                    )
                   ],
                 ),
                 child: Center(child: offerTypes[offer.offerTypeId]),
@@ -99,7 +100,19 @@ class OfferComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(offer.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.tertiary),),
+                  Row(
+                    children: [
+                      StarRating(
+                        rating: (2*offer.avgRating).floorToDouble()/2,
+                        allowHalfRating: true,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 12,),
+                      Text(offer.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.tertiary),),
+
+                    ],
+                  ),
                   Text("${offer.pricePerKG}lv/kg ") //TODO: add town to user class (update api and db)
                 ],
               )

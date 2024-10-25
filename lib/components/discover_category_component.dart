@@ -16,11 +16,11 @@ class DiscoverCategoryComponent extends StatelessWidget {
         color: Color(color).withOpacity(0.85),
           boxShadow: const [
             BoxShadow(
-              color: Colors.black38,
+              color: Colors.black12,
               spreadRadius: 0,
-              blurRadius: 0.6,
-              offset: Offset(0, 1), // changes position of shadow
-            ),
+              blurRadius: 15,
+              offset: Offset(5, 5), // Shadow moved to the right and bottom
+            )
           ],
           borderRadius: BorderRadius.circular(25),
       ),

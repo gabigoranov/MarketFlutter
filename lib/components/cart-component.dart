@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import '../models/order.dart';
 
-class HistoryOrderComponent extends StatelessWidget {
+import '../models/order.dart';
+class CartComponent extends StatelessWidget {
   final Order order;
-  HistoryOrderComponent({super.key, required this.order});
+  final BorderRadius borderRadius;
+  const CartComponent({super.key, required this.order, required this.borderRadius});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(1.0),
           child: Container(
+            width: MediaQuery.of(context).size.width*0.9,
             height: MediaQuery.of(context).size.height*0.1,
             decoration: BoxDecoration(
               color: const Color(0xffFFFFFF),
@@ -23,7 +25,7 @@ class HistoryOrderComponent extends StatelessWidget {
                   offset: Offset(5, 5), // Shadow moved to the right and bottom
                 )
               ],
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: borderRadius,
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),

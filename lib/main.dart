@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/authentication_wrapper.dart';
+import 'package:market/services/offer_service.dart';
 import 'package:market/views/onboarding.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyApp> {
   void initState(){
     super.initState();
     hubConnection = HubConnectionBuilder().withUrl(serverUrl).build();
+    OfferService.instance.loadOffers();
     initSignalR();
   }
 
