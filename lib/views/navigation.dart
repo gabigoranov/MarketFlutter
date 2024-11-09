@@ -8,24 +8,24 @@ import 'package:market/views/home.dart';
 import 'package:market/views/profile.dart';
 
 final storage = FlutterSecureStorage();
-PageController _pageController = PageController();
 
 class Navigation extends StatefulWidget {
   final int index;
-  final String text;
-  const Navigation({super.key, required this.index, this.text = ""});
+  final String? text;
+  const Navigation({super.key, required this.index, this.text});
   @override
   State<Navigation> createState() => _NavigationState(index, text);
 }
 
 class _NavigationState extends State<Navigation> {
-  _NavigationState(int index, String text){
+  int _currentIndex = 1;
+  String? text;
+  late PageController _pageController = PageController(initialPage: _currentIndex);
+  _NavigationState(int index, String? input){
     _currentIndex = index;
-    text = text;
+    _pageController = PageController(initialPage: _currentIndex);
+    text = input;
   }
-
-  String text = "";
-  int _currentIndex = 0;
 
 
 
@@ -41,10 +41,11 @@ class _NavigationState extends State<Navigation> {
             onPageChanged: (index) {
               setState(() {
                 _currentIndex = index;
+                text = text;
               });
             },
             children: [
-              Home(),
+              const Home(),
               Discover(text: text,),
               History(),
               Profile(userData: UserService.instance.user),

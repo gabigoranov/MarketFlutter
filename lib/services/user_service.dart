@@ -53,8 +53,12 @@ final class UserService {
   Future<String> delete(String id) async{
     final url = 'https://farmers-market.somee.com/api/Users/delete?id=$id';
     print(url);
-    Response<dynamic> response = await dio.get(url);
+    Response<dynamic> response = await dio.delete(url);
     return response.data;
+  }
+
+  void logout() {
+    storage.delete(key: "user_data");
   }
 
 }

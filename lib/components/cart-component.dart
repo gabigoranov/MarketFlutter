@@ -4,7 +4,8 @@ import '../models/order.dart';
 class CartComponent extends StatelessWidget {
   final Order order;
   final BorderRadius borderRadius;
-  const CartComponent({super.key, required this.order, required this.borderRadius});
+  final color;
+  const CartComponent({super.key, required this.order, required this.borderRadius, this.color = Colors.white});
 
   @override
   Widget build(BuildContext context, ) {
@@ -16,7 +17,7 @@ class CartComponent extends StatelessWidget {
             width: MediaQuery.of(context).size.width*0.9,
             height: MediaQuery.of(context).size.height*0.1,
             decoration: BoxDecoration(
-              color: const Color(0xffFFFFFF),
+              color: color,
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,

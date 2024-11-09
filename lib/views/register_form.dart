@@ -109,10 +109,10 @@ class _LoginFormState extends State<RegisterForm> {
                       labelText: 'Phone Number',
                     ),
                     validator: (value){
-                        if(value == null || value.isEmpty){
-                          return "Enter a valid phone number!";
-                        }
-                        return null;
+                      if(value == null || value.isEmpty){
+                        return "Enter a valid phone number!";
+                      }
+                      return null;
                     },
                   ),
                   TextFormField(
@@ -180,18 +180,18 @@ class _LoginFormState extends State<RegisterForm> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   await registerUser(User(
-                                      id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                      firstName: _firstNameController.value.text,
-                                      lastName: _lastNameController.value.text,
-                                      age:  int.parse(_ageController.value.text),
-                                      description: _descriptionController.value.text,
-                                      password: _passwordController.value.text,
-                                      phoneNumber: _phoneController.value.text,
-                                      rating: 0,
-                                      town: _townController.value.text,
-                                      email: _emailController.value.text,
-                                      isSeller: false,
-                                      boughtOrders: [],
+                                    id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                    firstName: _firstNameController.value.text,
+                                    lastName: _lastNameController.value.text,
+                                    age:  int.parse(_ageController.value.text),
+                                    description: _descriptionController.value.text,
+                                    password: _passwordController.value.text,
+                                    phoneNumber: _phoneController.value.text,
+                                    rating: 0,
+                                    town: _townController.value.text,
+                                    email: _emailController.value.text,
+                                    isSeller: false,
+                                    boughtOrders: [],
                                   ));
                                   await UserService.instance.login(_emailController.value.text, _passwordController.value.text);
                                   Navigator.push(context,

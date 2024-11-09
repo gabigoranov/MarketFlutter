@@ -24,7 +24,7 @@ final class PurchaseService {
     return response.data;
   }
 
-  List<Order> getPurchases(){
+  List<Purchase> getPurchases(){
     return UserService.instance.user.boughtOrders;
   }
 }

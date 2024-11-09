@@ -1,4 +1,6 @@
 
+import 'package:market/models/purchase.dart';
+
 import 'order.dart';
 
 class User{
@@ -13,7 +15,7 @@ class User{
   double rating;
   String town;
   bool isSeller;
-  List<Order> boughtOrders;
+  List<Purchase> boughtOrders;
 
   // Constructor
   User({required this.id, required this.firstName, required this.lastName,
@@ -23,11 +25,10 @@ class User{
 
   // Factory constructor to create a User instance from a JSON map
   factory User.fromJson(Map<String, dynamic> json) {
-    List<Order> converted = [];
-    print(json);
-    if(json['boughtOrders'].length > 0){
-      for(int i = 0; i < json['boughtOrders'].length; i++){
-        converted.add(Order.fromJson(json['boughtOrders'][i]));
+    List<Purchase> converted = [];
+    if(json['boughtPurchases'].length > 0){
+      for(int i = 0; i < json['boughtPurchases'].length; i++){
+        converted.add(Purchase.fromJson(json['boughtPurchases'][i]));
       }
     }
     User res = User(

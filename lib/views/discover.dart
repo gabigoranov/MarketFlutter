@@ -11,8 +11,8 @@ import 'package:market/models/user.dart';
 final dio = Dio();
 
 class Discover extends StatefulWidget {
-  final String text;
-  const Discover({super.key, this.text = ""});
+  final String? text;
+  const Discover({super.key, this.text});
 
   @override
   State<Discover> createState() => _DiscoverState(text);
@@ -21,28 +21,14 @@ class Discover extends StatefulWidget {
 class _DiscoverState extends State<Discover> {
 
   List<Widget> offers = [];
-  List<Widget> searched = [];
-  String text = "";
+
+  String? text;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController searchController = TextEditingController();
   User userData = UserService.instance.user;
 
-  _DiscoverState(String text);
-
-
-
-  Future<void> search(text) async{
-    String input = searchController.value.text;
-    String url = "https://www.farmers-market.somee.com/api/Offers/search?input=$input&prefferedTown=${userData.town}";
-    Response<dynamic> response = await dio.get(url);
-    text = "";
-    setState(() {
-      searched = [];
-      for(int i = 0; i < response.data.length; i++){
-        searched.add(OfferComponent(offer: Offer.fromJson(response.data[i])));
-      }
-      offers = searched;
-    });
+  _DiscoverState(String? input){
+    text = input;
   }
 
   @override
@@ -50,10 +36,14 @@ class _DiscoverState extends State<Discover> {
     // TODO: implement initState
     super.initState();
     offers = OfferService.instance.offerWidgets;
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    if(text != null){
+      search(text!);
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -61,23 +51,23 @@ class _DiscoverState extends State<Discover> {
           padding: const EdgeInsets.symmetric(vertical: 0),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width*0.9,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width*0.75,
                       child: Form(
                         key: _formKey,
                         child: TextFormField(
                           controller: searchController,
                           decoration: InputDecoration(
-                            hintText: 'Search something here',
-                            contentPadding: EdgeInsets.all(12.0),
+                            hintText: text ?? 'Search something here',
+                            contentPadding: const EdgeInsets.all(12.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(color: Colors.white, width: 3.0),
+                              borderSide: const BorderSide(color: Colors.white, width: 3.0),
                             ),
                           ),
                         ),
@@ -86,14 +76,8 @@ class _DiscoverState extends State<Discover> {
                     IconButton(
                       onPressed: () async{
                         String input = searchController.value.text;
-                        String url = "https://www.farmers-market.somee.com/api/Offers/search?input=$input&prefferedTown=${userData.town}";
-                        Response<dynamic> response = await dio.get(url);
-                        setState(() {
-                          searched = [];
-                          for(int i = 0; i < response.data.length; i++){
-                            searched.add(OfferComponent(offer: Offer.fromJson(response.data[i])));
-                          }
-                        });
+                        search(input);
+
                       },
                       icon: const Icon(CupertinoIcons.search),
                     )
@@ -107,6 +91,17 @@ class _DiscoverState extends State<Discover> {
         ),
       ),
     );
+  }
+
+  Future<void> search(String input) async {
+    String url = "https://farmers-market.somee.com/api/Offers/search?input=$input&prefferedTown=${userData.town}";
+    Response<dynamic> response = await dio.get(url);
+    setState(() {
+      offers = [];
+      for(int i = 0; i < response.data.length; i++){
+        offers.add(OfferComponent(offer: Offer.fromJson(response.data[i])));
+      }
+    });
   }
 
 }

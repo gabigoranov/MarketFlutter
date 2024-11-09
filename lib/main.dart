@@ -50,6 +50,13 @@ class _MyAppState extends State<MyApp> {
   // Creates the connection by using the HubConnectionBuilder.
   late HubConnection hubConnection;
 
+  final List<String> imageUrls = [
+    'assets/onboarding_1.png',
+    'assets/onboarding_2.png',
+    'assets/onboarding_3.png',
+    'assets/logo.png',
+    'assets/Icons/apple.svg',
+  ];
 
   @override
   void initState(){
@@ -70,6 +77,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    imageUrls.forEach((url) => precacheImage(AssetImage(url), context));
     return MaterialApp(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(

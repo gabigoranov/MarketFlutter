@@ -18,8 +18,4 @@ final class OrderService {
     UserService.instance.reload();
     return response.data;
   }
-
-  List<Order> getOrders(){
-    return UserService.instance.user.boughtOrders;
-  }
 }

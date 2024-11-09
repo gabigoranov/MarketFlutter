@@ -10,11 +10,11 @@ class Purchase{
   String buyerId;
   DateTime? dateOrdered;
   DateTime? dateDelivered;
-  bool isDelivered;
+  bool isDelivered() => !orders!.any((x) => !x.isDelivered);
   List<Order>? orders;
 
   Purchase({ this.id=0, this.price=0,
-    this.address, required this.buyerId, this.dateOrdered, this.dateDelivered, required this.isDelivered, this.orders = null});
+    this.address, required this.buyerId, this.dateOrdered, this.dateDelivered, this.orders = null});
 
   factory Purchase.fromJson(Map<String, dynamic> json) {
     List<Order> converted = [];
@@ -31,7 +31,6 @@ class Purchase{
       buyerId: json['buyerId'] as String,
       dateOrdered: DateTime.parse(json['dateOrdered']),
       dateDelivered: json['dateDelivered'] != null ? DateTime.parse(json['dateDelivered']) : null,
-      isDelivered: json['isDelivered'] as bool,
       orders: converted,
     );
     return res;

@@ -53,6 +53,10 @@ class _HomeState extends State<Home> {
                           ),
                           IconButton(
                             onPressed: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (context) => Navigation(index: 1, text: searchController.text,)),
+                                    (Route<dynamic> route) => false,
+                              );
                             },
                             icon: const Icon(CupertinoIcons.search),
                           )

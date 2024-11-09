@@ -134,7 +134,7 @@ class CartView extends StatelessWidget {
                               for (var e in items) {
                                 e.address = _addressController.text;
                               }
-                              Purchase purchase = Purchase(buyerId: UserService.instance.user.id, price: items.map((e) => e.price).sum, address: _addressController.text, isDelivered: false, orders: items);
+                              Purchase purchase = Purchase(buyerId: UserService.instance.user.id, price: items.map((e) => e.price).sum, address: _addressController.text, orders: items);
                               await PurchaseService.instance.purchase(purchase);
                               Navigator.pop(
                                 context,

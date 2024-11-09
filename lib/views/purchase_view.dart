@@ -100,7 +100,7 @@ class PurchaseView extends StatelessWidget {
                                 shadowColor: Colors.black,
                                 elevation: 4.0,
                               ),
-                              child: Text("Purchase", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                              child: Text("Add To Cart", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                             ),
                           ],
                         ),

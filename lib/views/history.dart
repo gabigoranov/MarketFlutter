@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:market/components/history_order_component.dart';
 import 'package:market/models/order.dart';
 import 'package:market/services/order_service.dart';
+import 'package:market/services/purchase-service.dart';
+
+import '../models/purchase.dart';
 
 class History extends StatelessWidget {
-  final List<Order> orders = OrderService.instance.getOrders();
+  final List<Purchase> orders = PurchaseService.instance.getPurchases();
   final List<HistoryOrderComponent> widgets = [];
 
   History({super.key});
