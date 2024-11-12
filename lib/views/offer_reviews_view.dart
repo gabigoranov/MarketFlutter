@@ -9,32 +9,23 @@ import 'package:market/services/user_service.dart';
 import '../models/review.dart';
 
 class OfferReviewsView extends StatefulWidget {
-  final List<Review> reviews;
+  List<Review> reviews;
   final int offerId;
-  const OfferReviewsView({super.key, required this.reviews, required this.offerId});
-
-  List<ReviewComponent> getReviewComponents(List<Review> model) {
-    List<ReviewComponent> res = [];
-    for(Review review in model){
-      res.add(ReviewComponent(review: review));
-    }
-    return res;
-  }
+  OfferReviewsView({super.key, required this.reviews, required this.offerId});
 
   @override
-  State<OfferReviewsView> createState() => _OfferReviewsViewState(getReviewComponents(reviews),  offerId);
+  State<OfferReviewsView> createState() => _OfferReviewsViewState(offerId);
 }
 
 class _OfferReviewsViewState extends State<OfferReviewsView> {
   double rating = 2.5;
   TextEditingController descriptionController = TextEditingController();
 
-  List<ReviewComponent> widgets = [];
   int offerId = 0;
-  _OfferReviewsViewState(List<ReviewComponent> _widgets, int _offerId) {
-    widgets = _widgets;
+  _OfferReviewsViewState(int _offerId) {
     offerId = _offerId;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +40,7 @@ class _OfferReviewsViewState extends State<OfferReviewsView> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: ListView(
-                  children: widgets,
+                  children: widget.reviews.reversed.map((element) => ReviewComponent(review: element)).toList(),
                 ),
               ),
             ),
@@ -122,8 +113,9 @@ class _OfferReviewsViewState extends State<OfferReviewsView> {
                                   setState(() {
                                     Review review = Review(offerId: offerId, firstName: UserService.instance.user.firstName, lastName: UserService.instance.user.lastName, description: descriptionController.text, rating: rating);
                                     ReviewService.instance.publish(review);
-                                    widgets.add(ReviewComponent(review: review));
                                     OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).reviews!.add(review);
+                                    widget.reviews = OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).reviews!;
+                                    OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).avgRating = widget.reviews.map((m) => m.rating).reduce((a, b) => a + b) / widget.reviews.length;
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(

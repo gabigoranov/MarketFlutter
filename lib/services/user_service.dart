@@ -24,7 +24,7 @@ final class UserService {
   }
 
   Future<void> login(String email, String password) async{
-    final url = 'https://farmers-market.somee.com/api/users/login?email=$email&password=$password';
+    final url = 'https://farmers-api.runasp.net/api/users/login?email=$email&password=$password';
     Response<dynamic> response = await dio.get(url);
 
     User user =  User.fromJson(response.data);
@@ -37,21 +37,21 @@ final class UserService {
   }
 
   Future<void> reload() async{
-    final url = 'https://farmers-market.somee.com/api/Users/login?email=${this.user.email}&password=${this.user.password}';
+    final url = 'https://farmers-api.runasp.net/api/Users/login?email=${this.user.email}&password=${this.user.password}';
     Response<dynamic> response = await dio.get(url);
     User user =  User.fromJson(response.data);
     _user = user;
   }
 
   Future<User> getWithId(String id) async{
-    final url = 'https://farmers-market.somee.com/api/Users/getWithId?id=$id';
+    final url = 'https://farmers-api.runasp.net/api/Users/getWithId?id=$id';
     Response<dynamic> response = await dio.get(url);
     User user =  User.fromJson(response.data);
     return user;
   }
 
   Future<String> delete(String id) async{
-    final url = 'https://farmers-market.somee.com/api/Users/delete?id=$id';
+    final url = 'https://farmers-api.runasp.net/api/Users/delete?id=$id';
     print(url);
     Response<dynamic> response = await dio.delete(url);
     return response.data;

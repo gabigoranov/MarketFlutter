@@ -1,19 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:market/views/discover.dart';
+
+import '../views/navigation.dart';
 
 class DiscoverCategoryComponent extends StatelessWidget {
   final String title;
   final String imgURL;
   final int color;
-  const DiscoverCategoryComponent({super.key, required this.title, required this.imgURL, required this.color});
+
+  const DiscoverCategoryComponent(
+      {super.key,
+      required this.title,
+      required this.imgURL,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-      width: MediaQuery.of(context).size.width*0.9,
-      height: MediaQuery.of(context).size.height*0.11,
-      decoration: BoxDecoration(
-        color: Color(color).withOpacity(0.85),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) => Scaffold(
+                  appBar: AppBar(
+                    title: Align(alignment: Alignment.centerRight,child: Text("Discover $title")),
+                    shadowColor: Colors.black87,
+                    elevation: 0.4,
+                  ),
+                  backgroundColor: const Color(0xffffffff),
+                  body: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+                    child: SafeArea(
+                        child: DiscoverBody(
+                          category: title,
+                        )
+                    ),
+                  )
+              )
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.height * 0.11,
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(imgURL), fit: BoxFit.cover),
+          color: Color(color).withOpacity(0.85),
           boxShadow: const [
             BoxShadow(
               color: Colors.black12,
@@ -23,17 +55,18 @@ class DiscoverCategoryComponent extends StatelessWidget {
             )
           ],
           borderRadius: BorderRadius.circular(25),
-      ),
-
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: Colors.white)
-          ),
-        ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title,
+                style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white)),
+          ],
+        ),
       ),
     );
   }

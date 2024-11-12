@@ -21,7 +21,6 @@ class PurchaseView extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _quantityController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
 
   String generateTitle(double quantity, Offer offer){
     User user = UserService.instance.user;
@@ -63,18 +62,6 @@ class PurchaseView extends StatelessWidget {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    controller: _addressController,
-                    decoration: const InputDecoration(
-                      labelText: 'Address',
-                    ),
-                    validator: (value){
-                      if(value == null || value.isEmpty){
-                        return "Enter a valid address!";
-                      }
-                      return null;
-                    },
-                  ),
                   Row(
                     children: [
                       Expanded(
@@ -87,7 +74,6 @@ class PurchaseView extends StatelessWidget {
                                 if (_formKey.currentState!.validate()) {
                                   model.quantity = double.parse(_quantityController.value.text);
                                   model.price = model.quantity*offer.pricePerKG;
-                                  model.address = _addressController.value.text;
                                   model.offerTypeId = offer.offerTypeId;
                                   model.title = generateTitle(model.quantity, offer);
                                   await CartService.instance.add(model);

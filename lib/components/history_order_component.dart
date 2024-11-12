@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:market/models/purchase.dart';
-import 'package:market/views/purchase-details.dart';
+import 'package:market/views/purchase–details.dart';
 import '../models/order.dart';
 
 class HistoryOrderComponent extends StatelessWidget {
@@ -25,6 +25,7 @@ class HistoryOrderComponent extends StatelessWidget {
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height*0.1,
+                  width: MediaQuery.of(context).size.width*0.9,
                   decoration: BoxDecoration(
                     color: const Color(0xffFFFFFF),
                     boxShadow: const [

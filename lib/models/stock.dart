@@ -1,12 +1,15 @@
 
+import 'package:market/models/offer_type_id.dart';
+
 class Stock {
   int id;
   int offerTypeId;
   String title;
   String sellerId;
   double quantity;
+  OfferType offerType;
   // Constructor
-  Stock({required this.id, required this.title, required this.sellerId, required this.quantity, required this.offerTypeId});
+  Stock({required this.id, required this.title, required this.sellerId, required this.quantity, required this.offerTypeId, required this.offerType});
 
   factory Stock.fromJson(Map<String, dynamic> json) {
     Stock res = Stock(
@@ -15,6 +18,7 @@ class Stock {
       sellerId: json['sellerId'] as String,
       offerTypeId: json['offerTypeId'] as int,
       quantity: json['quantity']+.0,
+      offerType: OfferType.fromJson(json['offerType']),
     );
     return res;
   }

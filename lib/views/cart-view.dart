@@ -5,19 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:market/components/cart-component.dart';
 import 'package:market/models/purchase.dart';
 import 'package:market/services/cart-service.dart';
-import 'package:market/services/order_service.dart';
 import 'package:market/services/purchase-service.dart';
 import 'package:market/services/user_service.dart';
-import 'package:market/views/cart_purchase_view.dart';
-import 'package:market/views/history.dart';
 import '../models/order.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CartView extends StatelessWidget {
   final List<Order> items = CartService.instance.cart;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _addressController = TextEditingController();
+
+
   CartView({super.key});
+
+  bool isDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -87,79 +85,111 @@ class CartView extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 12,),
-                    Form(
-                      key: _formKey,
-                      child: SizedBox(
-                        width: 200,
-                        child: TextFormField(
-                          controller: _addressController,
-                          decoration: InputDecoration(
-                            suffixIcon: const Icon(CupertinoIcons.house),
-                            suffixIconColor: Colors.green,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            hintText: 'Address',
-                          ),
-                          validator: (value){
-                            if(value == null || value.isEmpty){
-                              return "Enter a valid address!";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () async{
-                            await CartService.instance.delete();
-                            Navigator.pop(
-                              context,
-                            );
-                          },
-                          icon: const Icon(Icons.delete),
-                        ),
-                        const SizedBox(width: 12,),
-                        SizedBox(
-                          width: 200,
-                          child: TextButton(
-                            onPressed: () async {
-                              for (var e in items) {
-                                e.address = _addressController.text;
-                              }
-                              Purchase purchase = Purchase(buyerId: UserService.instance.user.id, price: items.map((e) => e.price).sum, address: _addressController.text, orders: items);
-                              await PurchaseService.instance.purchase(purchase);
-                              Navigator.pop(
-                                context,
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xff26D156),
-                              foregroundColor: Colors.white,
-                              shadowColor: Colors.black,
-                              elevation: 4.0,
-                            ),
-                            child: const Text("Purchase", style: TextStyle(color: Colors.white, fontSize: 24),),
-                          ),
-                        ),
-                        const SizedBox(width: 12,),
-                        Text("${items.map((e) => e.price).sum}\nBGN."),
-                      ],
-                    ),
-                  ],
+                child: const Center(
+                  child: PurchaseForm(),
                 ),
               ),
             )
           ],
         ),
       )
+    );
+  }
+}
+
+class PurchaseForm extends StatefulWidget {
+  const PurchaseForm({super.key});
+
+  @override
+  State<PurchaseForm> createState() => _PurchaseFormState();
+}
+
+class _PurchaseFormState extends State<PurchaseForm> {
+  final List<Order> items = CartService.instance.cart;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _addressController = TextEditingController();
+  bool isActive = true;
+
+
+  void _disableButton() { setState(() { isActive = false; }); }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(height: 12,),
+        Center(
+          child: Form(
+            key: _formKey,
+            child: SizedBox(
+              width: 200,
+              child: TextFormField(
+                controller: _addressController,
+                decoration: InputDecoration(
+                  suffixIcon: const Icon(CupertinoIcons.house),
+                  suffixIconColor: Colors.green,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  hintText: 'Address',
+                ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Enter a valid address!";
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12,),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () async{
+                  await CartService.instance.delete();
+                  Navigator.pop(
+                    context,
+                  );
+                },
+                icon: const Icon(Icons.delete),
+              ),
+              const SizedBox(width: 12,),
+              SizedBox(
+                width: 200,
+                child: TextButton(
+                  onPressed: isActive ? () async {
+                    _disableButton();
+                    for (var e in items) {
+                      e.address = _addressController.text;
+                    }
+                    Purchase purchase = Purchase(buyerId: UserService.instance.user.id, price: items.map((e) => e.price).sum, address: _addressController.text, orders: items);
+                    await PurchaseService.instance.purchase(purchase);
+                    Navigator.pop(
+                      context,
+                    );
+                  } : () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff26D156),
+                    foregroundColor: Colors.white,
+                    shadowColor: Colors.black,
+                    elevation: 4.0,
+                  ),
+                  child: const Text("Purchase", style: TextStyle(color: Colors.white, fontSize: 24),),
+                ),
+              ),
+              const SizedBox(width: 12,),
+              Text("${items.map((e) => e.price).sum}\nBGN."),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

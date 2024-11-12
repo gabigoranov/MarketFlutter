@@ -21,20 +21,20 @@ final class OfferService {
 
 
   Future<String> delete(int id) async{
-    final url = 'https://farmers-market.somee.com/api/Offers/delete?id=$id';
+    final url = 'https://farmers-api.runasp.net/api/Offers/delete?id=$id';
     Response<dynamic> response = await dio.delete(url);
     UserService.instance.reload();
     return response.data;
   }
 
   Future<String> edit(Offer offer) async{
-    const url = 'https://farmers-market.somee.com/api/edit/';
+    const url = 'https://farmers-api.runasp.net/api/edit/';
     Response<dynamic> response = await dio.post(url, data: jsonEncode(offer));
     return response.data;
   }
 
   Future<void> loadOffers() async{
-    String url = 'https://farmers-market.somee.com/api/Offers/getAll';
+    String url = 'https://farmers-api.runasp.net/api/Offers/getAll';
     Response<dynamic> response = await dio.get(url);
     for(int i = 0; i < response.data.length; i++){
       loadedOffers.add(Offer.fromJson(response.data[i]));

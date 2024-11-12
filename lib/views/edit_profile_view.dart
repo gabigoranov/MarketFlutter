@@ -8,37 +8,55 @@ import 'package:market/models/user.dart';
 
 final dio = Dio();
 
-class RegisterForm extends StatefulWidget {
-  const RegisterForm({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<RegisterForm> createState() => _LoginFormState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _LoginFormState extends State<RegisterForm> {
+class _EditProfileState extends State<EditProfile> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _townController = TextEditingController();
+
+  Future<void> editUser(User user) async{
+    const url = 'https://farmers-api.runasp.net/api/Users/edit/';
+    await dio.post(url, data: jsonEncode(user));
+
+    //print(response);
+  }
+  @override
+  void initState() {
+    super.initState();
+    _firstNameController.text = UserService.instance.user.firstName;
+    _lastNameController.text = UserService.instance.user.lastName;
+    _ageController.text = UserService.instance.user.age.toString();
+    _phoneController.text = UserService.instance.user.phoneNumber;
+    _descriptionController.text = UserService.instance.user.description;
+    _emailController.text = UserService.instance.user.email;
+    _passwordController.text = UserService.instance.user.password;
+    _townController.text = UserService.instance.user.town;
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    TextEditingController _firstNameController = TextEditingController();
-    TextEditingController _lastNameController = TextEditingController();
-    TextEditingController _ageController = TextEditingController();
-    TextEditingController _phoneController = TextEditingController();
-    TextEditingController _descriptionController = TextEditingController();
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
-    TextEditingController _townController = TextEditingController();
-
-    Future<void> registerUser(User user) async{
-      const url = 'https://farmers-api.runasp.net/api/Users/add/';
-      print(jsonEncode(user).toString());
-      await dio.post(url, data: jsonEncode(user));
-
-      //print(response);
-    }
+    print(UserService.instance.user.toJson());
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register Form'),
+        title: const Align(alignment: Alignment.centerRight, child: Text("Edit Profile")),
+        shadowColor: Colors.black87,
+        elevation: 0.4,
+        backgroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -179,24 +197,19 @@ class _LoginFormState extends State<RegisterForm> {
                             TextButton(
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await registerUser(User(
-                                    id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                    firstName: _firstNameController.value.text,
-                                    lastName: _lastNameController.value.text,
-                                    age:  int.parse(_ageController.value.text),
-                                    description: _descriptionController.value.text,
-                                    password: _passwordController.value.text,
-                                    phoneNumber: _phoneController.value.text,
-                                    rating: 0,
-                                    town: _townController.value.text,
-                                    email: _emailController.value.text,
-                                    isSeller: false,
-                                    boughtOrders: [],
-                                  ));
-                                  await UserService.instance.login(_emailController.value.text, _passwordController.value.text);
+                                  UserService.instance.user.firstName = _firstNameController.value.text;
+                                  UserService.instance.user.lastName = _lastNameController.value.text;
+                                  UserService.instance.user.age = int.parse(_ageController.value.text);
+                                  UserService.instance.user.description = _descriptionController.value.text;
+                                  UserService.instance.user.password = _passwordController.value.text;
+                                  UserService.instance.user.phoneNumber = _phoneController.value.text;
+                                  UserService.instance.user.town = _townController.value.text;
+                                  UserService.instance.user.email = _emailController.value.text;
+
+                                  await editUser(UserService.instance.user);
                                   Navigator.push(context,
                                     MaterialPageRoute(builder: (context){
-                                      return ImageCapture(path: "profiles");
+                                      return const ImageCapture(path: "profiles");
                                     }),
                                   );
                                 }
@@ -207,7 +220,7 @@ class _LoginFormState extends State<RegisterForm> {
                                 shadowColor: Colors.black,
                                 elevation: 4.0,
                               ),
-                              child: Text("Register", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                              child: Text("Publish", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                             ),
                           ],
                         ),

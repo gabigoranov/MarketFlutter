@@ -17,7 +17,7 @@ final class PurchaseService {
 
 
   Future<String> purchase(Purchase model) async{
-    const url = 'https://farmers-market.somee.com/api/Purchases/add/';
+    const url = 'https://farmers-api.runasp.net/api/Purchases/add/';
     Response<dynamic> response = await dio.post(url, data: model.toJson());
     await CartService.instance.delete();
     UserService.instance.reload();

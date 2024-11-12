@@ -12,19 +12,22 @@ final storage = FlutterSecureStorage();
 class Navigation extends StatefulWidget {
   final int index;
   final String? text;
-  const Navigation({super.key, required this.index, this.text});
+  final String? category;
+  const Navigation({super.key, required this.index, this.text, this.category});
   @override
-  State<Navigation> createState() => _NavigationState(index, text);
+  State<Navigation> createState() => _NavigationState(index, text, category);
 }
 
 class _NavigationState extends State<Navigation> {
   int _currentIndex = 1;
   String? text;
+  String? category;
   late PageController _pageController = PageController(initialPage: _currentIndex);
-  _NavigationState(int index, String? input){
+  _NavigationState(int index, String? input, String? selectedCategory){
     _currentIndex = index;
     _pageController = PageController(initialPage: _currentIndex);
     text = input;
+    category = selectedCategory;
   }
 
 
@@ -46,7 +49,7 @@ class _NavigationState extends State<Navigation> {
             },
             children: [
               const Home(),
-              Discover(text: text,),
+              Discover(text: text, category: category,),
               History(),
               Profile(userData: UserService.instance.user),
             ],

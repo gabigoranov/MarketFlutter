@@ -15,7 +15,7 @@ final class ReviewService {
 
 
   Future<String> publish(Review model) async{
-    const url = 'https://farmers-market.somee.com/api/reviews/add/';
+    const url = 'https://farmers-api.runasp.net/api/reviews/add/';
     print(jsonEncode(model));
 
     Response<dynamic> response = await dio.post(url, data: jsonEncode(model));

@@ -46,7 +46,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String serverUrl = "https://farmers-market.somee.com/notificationHub";
+  String serverUrl = "https://farmers-api.runasp.net/notificationHub";
   // Creates the connection by using the HubConnectionBuilder.
   late HubConnection hubConnection;
 
@@ -55,7 +55,11 @@ class _MyAppState extends State<MyApp> {
     'assets/onboarding_2.png',
     'assets/onboarding_3.png',
     'assets/logo.png',
-    'assets/Icons/apple.svg',
+    'assets/discover-dairy.jpg',
+    'assets/discover-meat.jpg',
+    'assets/discover-fruits.jpg',
+    'assets/discover-vegetables.jpg',
+
   ];
 
   @override

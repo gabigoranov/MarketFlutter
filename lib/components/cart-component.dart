@@ -34,20 +34,12 @@ class CartComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("${order.quantity}KG of ${order.title.split(" ")[order.title.split(" ").length-1]}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.tertiary),),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("${order.address}"),
-                            const SizedBox(width:  22,),
-                            Text("${order.price} BGN."),
-                          ],
-                        ),
+                        Text("${order.price} BGN."),
                       ],
                     ),
                   )

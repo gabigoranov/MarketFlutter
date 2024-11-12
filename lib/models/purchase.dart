@@ -18,7 +18,6 @@ class Purchase{
 
   factory Purchase.fromJson(Map<String, dynamic> json) {
     List<Order> converted = [];
-    print(json);
     if(json['orders'].length > 0){
       for(int i = 0; i < json['orders'].length; i++){
         converted.add(Order.fromJson(json['orders'][i]));
