@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:market/models/purchase.dart';
+import 'package:market/models/user.dart';
 import 'package:market/services/cart-service.dart';
 import 'package:market/services/user_service.dart';
 import '../models/order.dart';
@@ -15,6 +16,10 @@ final class PurchaseService {
   PurchaseService._internal();
   static final PurchaseService instance = PurchaseService._internal();
 
+  late List<Purchase> _purchases;
+
+  List<Purchase> get purchases => _purchases;
+
 
   Future<String> purchase(Purchase model) async{
     const url = 'https://farmers-api.runasp.net/api/Purchases/add/';
@@ -27,4 +32,5 @@ final class PurchaseService {
   List<Purchase> getPurchases(){
     return UserService.instance.user.boughtOrders;
   }
+
 }

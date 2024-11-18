@@ -8,6 +8,7 @@ import 'package:market/services/cart-service.dart';
 import 'package:market/services/purchase-service.dart';
 import 'package:market/services/user_service.dart';
 import '../models/order.dart';
+import 'loading.dart';
 
 class CartView extends StatelessWidget {
   final List<Order> items = CartService.instance.cart;
@@ -166,11 +167,15 @@ class _PurchaseFormState extends State<PurchaseForm> {
                 child: TextButton(
                   onPressed: isActive ? () async {
                     _disableButton();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {return Loading();}));
                     for (var e in items) {
                       e.address = _addressController.text;
                     }
                     Purchase purchase = Purchase(buyerId: UserService.instance.user.id, price: items.map((e) => e.price).sum, address: _addressController.text, orders: items);
                     await PurchaseService.instance.purchase(purchase);
+                    Navigator.pop(
+                      context,
+                    );
                     Navigator.pop(
                       context,
                     );
@@ -185,7 +190,7 @@ class _PurchaseFormState extends State<PurchaseForm> {
                 ),
               ),
               const SizedBox(width: 12,),
-              Text("${items.map((e) => e.price).sum}\nBGN."),
+              Text("${double.parse((items.map((e) => e.price).sum).toStringAsFixed(2))}\nBGN."),
             ],
           ),
         ),

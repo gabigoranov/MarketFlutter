@@ -1,12 +1,11 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/authentication_wrapper.dart';
+import 'package:market/services/notification_service.dart';
 import 'package:market/services/offer_service.dart';
-import 'package:market/views/onboarding.dart';
-import 'package:signalr_netcore/hub_connection.dart';
-import 'package:signalr_netcore/hub_connection_builder.dart';
 
 const storage = FlutterSecureStorage();
 
@@ -24,13 +23,33 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyB22nSiqPthWDIWt5XEtHXESXCzNNhecRU",
-        appId: "1:847650161276:android:82cabff8157ffc19437ff9",
-        messagingSenderId: "847650161276",
+        apiKey: "AIzaSyC4NuBfxIl3AWAwTLXqWhJAdvm14iIn12I", //
+        authDomain: "market-229ca.firebaseapp.com",
         projectId: "market-229ca",
-        storageBucket: 'market-229ca.appspot.com',
+        storageBucket: "market-229ca.appspot.com",
+        messagingSenderId: "847650161276",
+        appId: "1:847650161276:web:07031ea27ebfa08a437ff9",
+        measurementId: "G-QLC2SX2XB5",
       )
   );
+
+  NotificationService.initialize();
+
+
+
+  FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    print('Notification clicked: ${message.notification?.title}');
+    NotificationService.handleMessage(message);
+
+  });
+
+  FirebaseMessaging.instance.getInitialMessage().then((message) {
+    if (message != null) {
+      print('Notification clicked (app was terminated): ${message.notification?.title}');
+      NotificationService.handleMessage(message);
+
+    }
+  });
 
 
   runApp( const MyApp() );
@@ -46,10 +65,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String serverUrl = "https://farmers-api.runasp.net/notificationHub";
-  // Creates the connection by using the HubConnectionBuilder.
-  late HubConnection hubConnection;
-
   final List<String> imageUrls = [
     'assets/onboarding_1.png',
     'assets/onboarding_2.png',
@@ -65,18 +80,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState(){
     super.initState();
-    hubConnection = HubConnectionBuilder().withUrl(serverUrl).build();
     OfferService.instance.loadOffers();
-    initSignalR();
   }
 
-  void initSignalR() async{
-    await hubConnection.start();
-    print('connected to signalr');
-    hubConnection.on('ReceiveMessage', (arguments) {
-      print(arguments);
-    });
-  }
 
 
   @override
@@ -101,7 +107,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
-
-

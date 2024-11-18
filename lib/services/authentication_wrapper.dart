@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/cart-service.dart';
+import 'package:market/services/firebase_service.dart';
 import 'package:market/views/landing.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/services/user_service.dart';
@@ -33,6 +35,10 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     List<dynamic> jsonData = jsonDecode(cartRead);
     List<Order> items = jsonData.map((orderJson) => Order.fromStorageJson(orderJson)).toList();
     CartService.instance.cart = items;
+
+    FirebaseService.instance.setupToken();
+
+
 
   }
 

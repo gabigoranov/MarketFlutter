@@ -1,18 +1,35 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:market/models/purchase.dart';
+import 'package:market/services/purchase-service.dart';
 import 'package:market/views/purchase–details.dart';
 import '../models/order.dart';
+import '../services/notification_service.dart';
 
-class HistoryOrderComponent extends StatelessWidget {
+class HistoryOrderComponent extends StatefulWidget {
   final Purchase order;
   const HistoryOrderComponent({super.key, required this.order});
+
+  @override
+  State<HistoryOrderComponent> createState() => _HistoryOrderComponentState();
+}
+
+class _HistoryOrderComponentState extends State<HistoryOrderComponent> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {return PurchaseDetails(purchase: order);}));
+        Navigator.push(context, MaterialPageRoute(builder: (context) {return PurchaseDetails(purchase: widget.order);}));
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -42,11 +59,23 @@ class HistoryOrderComponent extends StatelessWidget {
                 Positioned.fill(
                   child: FractionallySizedBox(
                     alignment: Alignment.centerLeft,
-                    widthFactor: order.orders!.where((x) => x.isDelivered == true).length/order.orders!.length,
+                    widthFactor: widget.order.orders!.where((x) => x.isDelivered == true).length/widget.order.orders!.length,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         color: Colors.greenAccent, // Fill color
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned.fill(
+                  child: FractionallySizedBox(
+                    alignment: Alignment.centerRight,
+                    widthFactor: widget.order.orders!.where((x) => x.isDenied == true).length/widget.order.orders!.length,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.red, // Fill color
                       ),
                     ),
                   ),
@@ -61,14 +90,14 @@ class HistoryOrderComponent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(DateFormat("dd|MM|yy").format(order.dateOrdered!).toString(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.black),),
+                            Text(DateFormat("dd/MM/yy").format(widget.order.dateOrdered!).toString(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.black),),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${order.address}", style: const TextStyle(color: Colors.black),),
+                                Text("${widget.order.address}", style: const TextStyle(color: Colors.black),),
                                 const SizedBox(width:  22,),
-                                Text("${order.price.toStringAsFixed(2)} BGN.", style: const TextStyle(color: Colors.black)),
+                                Text("${widget.order.price.toStringAsFixed(2)} BGN.", style: const TextStyle(color: Colors.black)),
                               ],
                             ),
                           ],

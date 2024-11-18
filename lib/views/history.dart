@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:market/components/history_order_component.dart';
 import 'package:market/models/order.dart';
@@ -5,18 +6,49 @@ import 'package:market/services/order_service.dart';
 import 'package:market/services/purchase-service.dart';
 
 import '../models/purchase.dart';
+import '../services/notification_service.dart';
 
-class History extends StatelessWidget {
-  final List<Purchase> orders = PurchaseService.instance.getPurchases();
-  final List<HistoryOrderComponent> widgets = [];
+class History extends StatefulWidget {
 
-  History({super.key});
+  const History({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<History> createState() => _HistoryState();
+}
+
+class _HistoryState extends State<History> {
+  List<Purchase> orders = PurchaseService.instance.getPurchases();
+
+  List<HistoryOrderComponent> widgets = [];
+
+  void listenForUpdate(){
+    FirebaseMessaging.onMessage.listen((message) {
+      //print('Foreground notification: ${message.notification?.title}');
+      setState(() {
+        orders = PurchaseService.instance.getPurchases();
+        widgets = [];
+        for(int i = 0; i < orders.length; i++){
+          widgets.add(HistoryOrderComponent(order: orders[i]));
+        }
+        NotificationService.handleMessage(message);
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    listenForUpdate();
+
     for(int i = 0; i < orders.length; i++){
       widgets.add(HistoryOrderComponent(order: orders[i]));
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,12 +57,17 @@ class History extends StatelessWidget {
         elevation: 0.4,
         backgroundColor: Colors.white,
       ),
-      body: Center(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: ListView(
-            children: widgets.reversed.toList(),
-          )
+      body: SingleChildScrollView(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Column(
+                children: widgets.reversed.toList(),
+              ),
+            ),
+          ],
         ),
       ),
     );

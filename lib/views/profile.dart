@@ -101,7 +101,7 @@ class _ProfileState extends State<Profile> {
                       Text(userData.town, style: const TextStyle(color: Colors.black, fontSize: 24),),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 2),
-                        child: Text(userData.description, style: const TextStyle(color: Colors.grey, fontSize: 20),),
+                        child: Text(userData.description, style: const TextStyle(color: Colors.grey, fontSize: 20,), textAlign: TextAlign.center,),
                       )
                     ],
                   ),
@@ -151,17 +151,9 @@ class _ProfileState extends State<Profile> {
                       showMenu(
                         context: context,
                         position: const RelativeRect.fromLTRB(100, 470, 0, 50),
-                        items: [ const PopupMenuItem<String>( value: 'delete', child: Text('Delete'), ), const PopupMenuItem<String>( value: 'logout', child: Text('Logout'), ), ],
+                        items: [ const PopupMenuItem<String>( value: 'logout', child: Text('Logout'), ), ],
                       ).then((value) async {
-                        if(value == "delete"){
-                          await UserService.instance.delete(userData.id);
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => Landing()),
-                            (Route<dynamic> route) => false,
-                          );
-
-                        }
-                        else if(value == "logout"){
+                        if(value == "logout"){
                           UserService.instance.logout();
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) => Landing()),

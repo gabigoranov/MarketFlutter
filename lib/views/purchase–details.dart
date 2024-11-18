@@ -31,6 +31,7 @@ class PurchaseDetails extends StatelessWidget {
                       itemBuilder: (context, index) {
                         BorderRadius borderRadius;
                         Color color = Colors.white;
+                        Color textColor = Colors.black;
                         if (index == 0) {
                           borderRadius = const BorderRadius.only(
                             topLeft: Radius.circular(10.0),
@@ -47,9 +48,12 @@ class PurchaseDetails extends StatelessWidget {
 
                         if(purchase.orders![index].isDelivered){
                           color = Colors.greenAccent;
+                        }else if(purchase.orders![index].isDenied!){
+                          color = Colors.black54;
+                          textColor = Colors.white;
                         }
 
-                        return CartComponent(order: purchase.orders![index], borderRadius: borderRadius, color: color,);
+                        return CartComponent(order: purchase.orders![index], borderRadius: borderRadius, color: color, textColor: textColor);
                       },
                     ),
                   ),

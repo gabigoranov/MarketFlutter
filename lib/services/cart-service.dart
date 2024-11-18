@@ -28,6 +28,12 @@ final class CartService {
       cart = [order];
       return;
     }
+    int index = cart.indexWhere((element) => element.offer!.id == order.offer!.id);
+    if(index >= 0){
+      cart[index].quantity += order.quantity;
+      cart[index].price += order.price;
+      return;
+    }
     cart.add(order);
     await storage.write(key: "user_cart", value: jsonEncode(cart));
   }

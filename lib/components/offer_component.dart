@@ -93,6 +93,12 @@ class OfferComponent extends StatelessWidget {
       height: 30, // Set the desired height
       color: Colors.white, // Optionally set a color
     ),
+    "Steak": SvgPicture.asset(
+      'assets/icons/steak.svg',
+      width: 30,  // Set the desired width
+      height: 30, // Set the desired height
+      color: Colors.white, // Optionally set a color
+    )
   };
   final Map<String, Color> colors = {
     "Apples": const Color(0xffF67979),
@@ -109,7 +115,7 @@ class OfferComponent extends StatelessWidget {
     "Strawberries": const Color(0xfffb2943),
     "Carrots": const Color(0xffed9121),
     "Tomatoes": const Color(0xffff6347),
-
+    "Steak": const Color(0xffff7f7f),
 
   };
 

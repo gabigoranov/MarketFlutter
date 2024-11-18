@@ -1,3 +1,5 @@
+import 'package:market/models/offer.dart';
+
 
 class Order{
   int id;
@@ -12,10 +14,13 @@ class Order{
   bool isDelivered;
   String title;
   int? offerTypeId;
+  bool? isAccepted;
+  bool? isDenied;
+  Offer? offer;
 
   Order({ this.id=0,  this.quantity=0, this.price=0,
      this.address, required this.offerId,
-    required this.buyerId, required this.sellerId, this.dateOrdered, this.title = "none", this.dateDelivered, required this.isDelivered, this.offerTypeId});
+    required this.buyerId, required this.sellerId, this.dateOrdered, this.title = "none", this.dateDelivered, required this.isDelivered, this.offerTypeId, this.isAccepted, this.isDenied, this.offer});
 
   factory Order.fromJson(Map<String, dynamic> json) {
     Order res = Order(
@@ -25,6 +30,8 @@ class Order{
       address: json['address'] as String,
       offerId: json['offerId'] as int,
       buyerId: json['buyerId'] as String,
+      isDenied: json['isDenied'] as bool,
+      isAccepted: json['isAccepted'] as bool,
       sellerId: json['sellerId'] as String,
       dateOrdered: DateTime.parse(json['dateOrdered']),
       dateDelivered: json['dateDelivered'] != null ? DateTime.parse(json['dateDelivered']) : null,

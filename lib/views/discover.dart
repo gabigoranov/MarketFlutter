@@ -25,6 +25,7 @@ class _DiscoverBodyState extends State<DiscoverBody> {
   User userData = UserService.instance.user;
 
   List<Widget> offers = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -83,7 +84,19 @@ class _DiscoverBodyState extends State<DiscoverBody> {
               ),
             ),
             const SizedBox(height: 22,),
-            Column(children: offers,),
+            isLoading
+            ? const Expanded(child: Center(child: CircularProgressIndicator()))
+            : Column(
+              children: offers.isNotEmpty ? List<Widget>.generate(
+                  offers.length * 2 - 1, (index) {
+                    if (index.isEven) {
+                      return offers[index ~/ 2];
+                    } else {
+                      return const SizedBox(height: 8);
+                    }
+                  }
+              ) : [],
+            ),
           ],
         ),
       ),
@@ -91,10 +104,15 @@ class _DiscoverBodyState extends State<DiscoverBody> {
   }
 
   Future<void> search(String input) async {
+    setState(() {
+      isLoading = true;
+      offers = [];
+    });
     String url = "https://farmers-api.runasp.net/api/Offers/search?input=$input&prefferedTown=${userData.town}";
     Response<dynamic> response = await dio.get(url);
+    print(response);
     setState(() {
-      offers = [];
+      //offers = [];
       for(int i = 0; i < response.data.length; i++){
         Offer offer = Offer.fromJson(response.data[i]);
         if(widget.category != null){
@@ -106,6 +124,9 @@ class _DiscoverBodyState extends State<DiscoverBody> {
         }
         offers.add(OfferComponent(offer: offer));
       }
+    });
+    setState(() {
+      isLoading = false;
     });
   }
 

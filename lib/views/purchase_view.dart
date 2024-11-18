@@ -73,8 +73,9 @@ class PurchaseView extends StatelessWidget {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   model.quantity = double.parse(_quantityController.value.text);
-                                  model.price = model.quantity*offer.pricePerKG;
+                                  model.price = double.parse((model.quantity*offer.pricePerKG).toStringAsFixed(2));
                                   model.offerTypeId = offer.offerTypeId;
+                                  model.offer = offer;
                                   model.title = generateTitle(model.quantity, offer);
                                   await CartService.instance.add(model);
                                   Navigator.pop(context);

@@ -46,7 +46,6 @@ final class OfferService {
     offerWidgets = [];
     for(int i = 0; i < OfferService.instance.loadedOffers.length; i++){
       offerWidgets.add(OfferComponent(offer: OfferService.instance.loadedOffers[i]));
-      offerWidgets.add(const SizedBox(height: 10,));
     }
   }
 }

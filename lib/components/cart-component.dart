@@ -5,7 +5,8 @@ class CartComponent extends StatelessWidget {
   final Order order;
   final BorderRadius borderRadius;
   final color;
-  const CartComponent({super.key, required this.order, required this.borderRadius, this.color = Colors.white});
+  final textColor;
+  const CartComponent({super.key, required this.order, required this.borderRadius, this.color = Colors.white, this.textColor = Colors.black});
 
   @override
   Widget build(BuildContext context, ) {
@@ -38,8 +39,8 @@ class CartComponent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("${order.quantity}KG of ${order.title.split(" ")[order.title.split(" ").length-1]}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.tertiary),),
-                        Text("${order.price} BGN."),
+                        Text("${order.quantity}KG of ${order.title.split(" ")[order.title.split(" ").length-1]}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: textColor, decoration: textColor == Colors.white ? TextDecoration.lineThrough : null),),
+                        Text("${order.price} BGN.", style: TextStyle(color: textColor,  decoration: textColor == Colors.white ? TextDecoration.lineThrough : null),),
                       ],
                     ),
                   )
