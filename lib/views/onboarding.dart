@@ -1,8 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:market/components/onboarding_data.dart';
 import 'package:market/views/landing.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
 
@@ -17,6 +16,25 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map> data = [
+      {
+        "image": "assets/onboarding_1.png",
+        "title": AppLocalizations.of(context)!.onboarding_1_title,
+        "desc": AppLocalizations.of(context)!.onboarding_1_description
+      },
+      {
+        "image": "assets/onboarding_2.png",
+        "title": AppLocalizations.of(context)!.onboarding_2_title,
+        "desc": AppLocalizations.of(context)!.onboarding_2_description
+      },
+      {
+        "image": "assets/onboarding_3.png",
+        "title": AppLocalizations.of(context)!.onboarding_3_title,
+        "desc": AppLocalizations.of(context)!.onboarding_3_description
+      },
+
+    ];
+
     return Scaffold(
       body: SafeArea(
         bottom: false,

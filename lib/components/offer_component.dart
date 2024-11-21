@@ -165,7 +165,7 @@ class OfferComponent extends StatelessWidget {
                 children: [
                   Text(offer.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.tertiary),),
                   StarRating(
-                    rating: (2*offer.avgRating).floorToDouble()/2,
+                    rating: offer.avgRating,
                     allowHalfRating: true,
                     mainAxisAlignment: MainAxisAlignment.start,
                     size: 24,

@@ -1,8 +1,5 @@
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:market/services/authentication_wrapper.dart';
 import 'package:market/views/cart-view.dart';
 import 'package:market/views/edit_profile_view.dart';
 import 'package:market/views/landing.dart';
@@ -10,6 +7,10 @@ import 'package:market/views/loading.dart';
 import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
 import 'package:market/services/firebase_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
+import '../services/locale_provider.dart';
 
 class Profile extends StatefulWidget {
   final User userData;
@@ -140,7 +141,7 @@ class _ProfileState extends State<Profile> {
                         shadowColor: Colors.white,
                         side: const BorderSide(color: Colors.blue, width: 2)
                       ),
-                      child: const Text("Edit Profile"),
+                      child: Text(AppLocalizations.of(context)!.edit_profile),
 
                     ),
                   ),
@@ -151,14 +152,25 @@ class _ProfileState extends State<Profile> {
                       showMenu(
                         context: context,
                         position: const RelativeRect.fromLTRB(100, 470, 0, 50),
-                        items: [ const PopupMenuItem<String>( value: 'logout', child: Text('Logout'), ), ],
+                        items: [
+                          PopupMenuItem<String>( value: AppLocalizations.of(context)!.logout, child: Text(AppLocalizations.of(context)!.logout), ),
+                          PopupMenuItem<String>( value: AppLocalizations.of(context)!.change_lang, child: Text(AppLocalizations.of(context)!.change_lang), ),
+                        ],
                       ).then((value) async {
-                        if(value == "logout"){
+                        if(value == AppLocalizations.of(context)!.logout){
                           UserService.instance.logout();
                           Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => Landing()),
+                            MaterialPageRoute(builder: (context) => const Landing()),
                                 (Route<dynamic> route) => false,
                           );
+                        }
+                        else if(value == AppLocalizations.of(context)!.change_lang){
+                          if(AppLocalizations.of(context)!.language == "English"){
+                            context.read<LocaleProvider>().changeLocale('bg');
+                          }
+                          else{
+                            context.read<LocaleProvider>().changeLocale('en');
+                          }
                         }
                       });
                     },
@@ -192,7 +204,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: ListTile(
                     leading: const Icon(Icons.calendar_month, size: 30, color: Colors.blue),
-                    title: Text("Age: ${userData.age}",
+                    title: Text("${AppLocalizations.of(context)!.age}: ${userData.age}",
                         style: const TextStyle(fontSize: 18)),
                   ),
                 ),

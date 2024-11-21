@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:market/components/discover_category_component.dart';
 import 'package:market/components/history_order_component.dart';
 import 'package:market/views/navigation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/purchase.dart';
 import '../services/purchase-service.dart';
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
                                 key: _formKey,
                                 controller: searchController,
                                 decoration: InputDecoration(
-                                  hintText: 'Search something here',
+                                  hintText: AppLocalizations.of(context)!.search,
                                   contentPadding: const EdgeInsets.all(12.0),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
@@ -66,7 +67,7 @@ class _HomeState extends State<Home> {
                           IconButton(
                             onPressed: () {
                               Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (context) => Navigation(index: 1, text: searchController.text,)),
+                                MaterialPageRoute(builder: (context) => Navigation(index: 1, text: searchController.text, category: null,)),
                                     (Route<dynamic> route) => false,
                               );
                             },
@@ -75,19 +76,19 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                       const SizedBox(height: 20,),
-                      const DiscoverCategoryComponent(title: "Vegetables", imgURL: "assets/discover-vegetables.jpg", color: 0xff26D156),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.vegetables, imgURL: "assets/discover-vegetables.jpg", color: 0xff26D156),
                       const SizedBox(height: 10,),
-                      const DiscoverCategoryComponent(title: "Fruits", imgURL: "assets/discover-fruits.jpg", color: 0xffF13A3A),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.fruits, imgURL: "assets/discover-fruits.jpg", color: 0xffF13A3A),
                       const SizedBox(height: 10,),
-                      const DiscoverCategoryComponent(title: "Dairy", imgURL: "assets/discover-dairy.jpg", color: 0xff56A8E4),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.dairy, imgURL: "assets/discover-dairy.jpg", color: 0xff56A8E4),
                       const SizedBox(height: 10,),
-                      const DiscoverCategoryComponent(title: "Meat", imgURL: "assets/discover-meat.jpg", color: 0xffFFFAA8),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.meat, imgURL: "assets/discover-meat.jpg", color: 0xffFFFAA8),
                       //tags
                       const SizedBox(height: 30,),
 
                     ],
                   ),
-                  const Text("Recent Orders:"),
+                  Text(AppLocalizations.of(context)!.recent_orders),
                   Column(
                     children: widgets,
                   ),

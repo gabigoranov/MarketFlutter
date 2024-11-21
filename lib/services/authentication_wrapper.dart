@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:market/models/user.dart';
 import 'package:market/services/cart-service.dart';
 import 'package:market/services/firebase_service.dart';
 import 'package:market/views/landing.dart';
@@ -37,7 +38,6 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     CartService.instance.cart = items;
 
     FirebaseService.instance.setupToken();
-
 
 
   }

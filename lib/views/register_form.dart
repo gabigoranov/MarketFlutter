@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:market/views/file_selector.dart';
 import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
+import 'package:market/views/navigation.dart';
 
 final dio = Dio();
 
@@ -15,27 +16,27 @@ class RegisterForm extends StatefulWidget {
   State<RegisterForm> createState() => _LoginFormState();
 }
 
+
 class _LoginFormState extends State<RegisterForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _townController = TextEditingController();
+
+  Future<void> registerUser(User user) async{
+    const url = 'https://farmers-api.runasp.net/api/Users/add/';
+    await dio.post(url, data: jsonEncode(user));
+
+    //print(response);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    TextEditingController _firstNameController = TextEditingController();
-    TextEditingController _lastNameController = TextEditingController();
-    TextEditingController _ageController = TextEditingController();
-    TextEditingController _phoneController = TextEditingController();
-    TextEditingController _descriptionController = TextEditingController();
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
-    TextEditingController _townController = TextEditingController();
-
-    Future<void> registerUser(User user) async{
-      const url = 'https://farmers-api.runasp.net/api/Users/add/';
-      print(jsonEncode(user).toString());
-      await dio.post(url, data: jsonEncode(user));
-
-      //print(response);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register Form'),
@@ -196,7 +197,7 @@ class _LoginFormState extends State<RegisterForm> {
                                   await UserService.instance.login(_emailController.value.text, _passwordController.value.text);
                                   Navigator.push(context,
                                     MaterialPageRoute(builder: (context){
-                                      return ImageCapture(path: "profiles");
+                                      return const ImageCapture(path: 'profiles',);
                                     }),
                                   );
                                 }

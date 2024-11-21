@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/models/user.dart';
+import 'package:market/services/offer_service.dart';
 
 final storage = FlutterSecureStorage();
 final dio = Dio();
@@ -34,6 +35,7 @@ final class UserService {
 
     await storage.write(key: "user_data", value: jsonEncode([user.email, user.password]));
     _user = user;
+
   }
 
   Future<void> reload() async{
@@ -59,6 +61,8 @@ final class UserService {
 
   void logout() {
     storage.delete(key: "user_data");
+    OfferService.instance.loadedOffers = [];
+    OfferService.instance.offerWidgets = [];
   }
 
 }

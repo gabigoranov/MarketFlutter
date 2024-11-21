@@ -40,7 +40,7 @@ class CartComponent extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("${order.quantity}KG of ${order.title.split(" ")[order.title.split(" ").length-1]}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: textColor, decoration: textColor == Colors.white ? TextDecoration.lineThrough : null),),
-                        Text("${order.price} BGN.", style: TextStyle(color: textColor,  decoration: textColor == Colors.white ? TextDecoration.lineThrough : null),),
+                        Text("${double.parse(order.price.toStringAsFixed(2))} BGN.", style: TextStyle(color: textColor,  decoration: textColor == Colors.white ? TextDecoration.lineThrough : null),),
                       ],
                     ),
                   )

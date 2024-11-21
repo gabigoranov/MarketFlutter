@@ -2,10 +2,14 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/authentication_wrapper.dart';
+import 'package:market/services/locale_provider.dart';
 import 'package:market/services/notification_service.dart';
 import 'package:market/services/offer_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 const storage = FlutterSecureStorage();
 
@@ -52,7 +56,12 @@ void main() async {
   });
 
 
-  runApp( const MyApp() );
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LocaleProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 
@@ -83,27 +92,52 @@ class _MyAppState extends State<MyApp> {
     OfferService.instance.loadOffers();
   }
 
+  Locale _locale = const Locale('en', ''); // Default language
+
+  void _setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    imageUrls.forEach((url) => precacheImage(AssetImage(url), context));
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-        ),
-        useMaterial3: true,
-        // Define the default brightness and colors.
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xffFFFFFF),
-          secondary: const Color(0xff40B886),
-          primary: const Color(0xff2C92FF),
-          background: const Color(0xffFFFFFF),
-          tertiary: const Color(0xff2C2B2B)
-        ),
-      ),
-      home: const AuthenticationWrapper(),
+    for (var url in imageUrls) {
+      precacheImage(AssetImage(url), context);
+    }
+    return Consumer<LocaleProvider>(
+      builder: (context, localeProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+            ),
+            useMaterial3: true,
+            // Define the default brightness and colors.
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xffFFFFFF),
+                secondary: const Color(0xff40B886),
+                primary: const Color(0xff2C92FF),
+                background: const Color(0xffFFFFFF),
+                tertiary: const Color(0xff2C2B2B)
+            ),
+          ),
+          supportedLocales: const [
+            Locale('en', ''),
+            Locale('bg', ''),
+          ],
+          locale: localeProvider.locale,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            AppLocalizations.delegate,
+          ],
+          home: const AuthenticationWrapper(),
+        );
+      },
     );
   }
 }

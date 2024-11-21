@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:market/components/review_component.dart';
+import 'package:market/models/offer.dart';
 import 'package:market/services/offer_service.dart';
 import 'package:market/services/review_service.dart';
 import 'package:market/services/user_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/review.dart';
+import 'navigation.dart';
 
 class OfferReviewsView extends StatefulWidget {
   List<Review> reviews;
@@ -87,10 +90,10 @@ class _OfferReviewsViewState extends State<OfferReviewsView> {
                         TextFormField(
                           controller: descriptionController,
                           maxLines: 4,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Enter your review',
-                            hintStyle: TextStyle(color: Colors.blue),
+                            hintText: AppLocalizations.of(context)!.review_cta,
+                            hintStyle: const TextStyle(color: Colors.blue),
                           ),
                           validator: (value){
                             if(value == null || value.isEmpty){
@@ -115,7 +118,9 @@ class _OfferReviewsViewState extends State<OfferReviewsView> {
                                     ReviewService.instance.publish(review);
                                     OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).reviews!.add(review);
                                     widget.reviews = OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).reviews!;
-                                    OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).avgRating = widget.reviews.map((m) => m.rating).reduce((a, b) => a + b) / widget.reviews.length;
+                                    OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).avgRating = widget.reviews.length > 1 ? widget.reviews.map((m) => m.rating).reduce((a, b) => a + b) / widget.reviews.length : widget.reviews[0].rating;
+                                    OfferService.instance.getData();
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) { return const Navigation(index: 1, text: null);}));
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -124,7 +129,7 @@ class _OfferReviewsViewState extends State<OfferReviewsView> {
                                   shadowColor: Colors.black,
                                   elevation: 4.0,
                                 ),
-                                child: Text("Publish", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                                child: Text(AppLocalizations.of(context)!.publish, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                               ),
                             ],
                           ),

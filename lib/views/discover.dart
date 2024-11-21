@@ -3,17 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market/components/offer_component.dart';
 import 'package:market/services/offer_service.dart';
-import 'package:market/views/loading.dart';
 import 'package:market/models/offer.dart';
 import 'package:market/services/user_service.dart';
 import 'package:market/models/user.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final dio = Dio();
 
 class DiscoverBody extends StatefulWidget {
-  final String? text;
+  String? text;
   final String? category;
-  const DiscoverBody({super.key, this.text, this.category});
+
+  DiscoverBody({super.key, this.text, this.category});
 
   @override
   State<DiscoverBody> createState() => _DiscoverBodyState();
@@ -22,29 +23,37 @@ class DiscoverBody extends StatefulWidget {
 class _DiscoverBodyState extends State<DiscoverBody> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController searchController = TextEditingController();
+
   User userData = UserService.instance.user;
 
   List<Widget> offers = [];
   bool isLoading = false;
 
+  void reloadWidgets() {
+    setState(() {
+      if(widget.category != null){
+        offers = OfferService.instance.loadedOffers.where((x) => x.stock.offerType.category == widget.category).map((element) => OfferComponent(offer: element)).toList();
+      }
+      else{
+        OfferService.instance.getData();
+        offers = OfferService.instance.offerWidgets;
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.category != null){
-      offers = OfferService.instance.loadedOffers.where((x) => x.stock.offerType.category == widget.category).map((element) => OfferComponent(offer: element)).toList();
+    reloadWidgets();
+    if(widget.text != null){
+      search(widget.text!);
     }
-    else{
-      offers = OfferService.instance.offerWidgets;
-    }
-
   }
 
   @override
   Widget build(BuildContext context) {
-    if(widget.text != null){
-      search(widget.text!);
-    }
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0),
@@ -62,7 +71,7 @@ class _DiscoverBodyState extends State<DiscoverBody> {
                       child: TextFormField(
                         controller: searchController,
                         decoration: InputDecoration(
-                          hintText: widget.text ?? 'Search something here',
+                          hintText: widget.text ?? AppLocalizations.of(context)!.search,
                           contentPadding: const EdgeInsets.all(12.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -75,7 +84,7 @@ class _DiscoverBodyState extends State<DiscoverBody> {
                   IconButton(
                     onPressed: () async{
                       String input = searchController.value.text;
-                      search(input);
+                      await search(input);
 
                     },
                     icon: const Icon(CupertinoIcons.search),
@@ -104,6 +113,11 @@ class _DiscoverBodyState extends State<DiscoverBody> {
   }
 
   Future<void> search(String input) async {
+    if(input == "") {
+      reloadWidgets();
+      widget.text = null;
+      return;
+    };
     setState(() {
       isLoading = true;
       offers = [];
@@ -112,12 +126,11 @@ class _DiscoverBodyState extends State<DiscoverBody> {
     Response<dynamic> response = await dio.get(url);
     print(response);
     setState(() {
-      //offers = [];
       for(int i = 0; i < response.data.length; i++){
         Offer offer = Offer.fromJson(response.data[i]);
         if(widget.category != null){
           if(offer.stock.offerType.category == widget.category){
-            offers.add(OfferComponent(offer: Offer.fromJson(response.data[i])));
+            offers.add(OfferComponent(offer: offer));
             continue;
           }
           continue;
@@ -127,6 +140,7 @@ class _DiscoverBodyState extends State<DiscoverBody> {
     });
     setState(() {
       isLoading = false;
+      widget.text = null;
     });
   }
 

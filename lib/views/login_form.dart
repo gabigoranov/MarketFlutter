@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:market/services/user_service.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/views/navigation.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 final dio = Dio();
 final storage = FlutterSecureStorage();
 
@@ -55,7 +55,7 @@ class _LoginFormState extends State<LoginForm>{
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Form'),
+        title: Text(AppLocalizations.of(context)!.login),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -70,16 +70,16 @@ class _LoginFormState extends State<LoginForm>{
               children: [
                 TextFormField(
                   controller: emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.email,
                   ),
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.password,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -125,7 +125,7 @@ class _LoginFormState extends State<LoginForm>{
                               shadowColor: Colors.black,
                               elevation: 4.0,
                             ),
-                            child: Text("Login", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                            child: Text(AppLocalizations.of(context)!.login, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                           ),
                         ],
                       ),

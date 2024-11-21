@@ -1,10 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:market/components/history_order_component.dart';
-import 'package:market/models/order.dart';
-import 'package:market/services/order_service.dart';
 import 'package:market/services/purchase-service.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../models/purchase.dart';
 import '../services/notification_service.dart';
 
@@ -52,7 +50,7 @@ class _HistoryState extends State<History> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Align(alignment: Alignment.center, child: Text("Order History", style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),)),
+        title: Align(alignment: Alignment.center, child: Text(AppLocalizations.of(context)!.order_history, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w800),)),
         shadowColor: Colors.black87,
         elevation: 0.4,
         backgroundColor: Colors.white,

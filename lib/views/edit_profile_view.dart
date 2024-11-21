@@ -46,11 +46,10 @@ class _EditProfileState extends State<EditProfile> {
     _townController.text = UserService.instance.user.town;
   }
 
+  ImageCapture _imageCapture = ImageCapture(path: "profiles");
 
   @override
   Widget build(BuildContext context) {
-    print(UserService.instance.user.toJson());
-
     return Scaffold(
       appBar: AppBar(
         title: const Align(alignment: Alignment.centerRight, child: Text("Edit Profile")),
@@ -70,6 +69,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  _imageCapture,
                   TextFormField(
                     controller: _firstNameController,
                     decoration: const InputDecoration(

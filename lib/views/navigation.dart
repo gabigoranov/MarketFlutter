@@ -6,8 +6,9 @@ import 'package:market/views/discover.dart';
 import 'package:market/views/history.dart';
 import 'package:market/views/home.dart';
 import 'package:market/views/profile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-final storage = FlutterSecureStorage();
+const storage = FlutterSecureStorage();
 
 class Navigation extends StatefulWidget {
   final int index;
@@ -50,7 +51,7 @@ class _NavigationState extends State<Navigation> {
             children: [
               const Home(),
               Discover(text: text, category: category,),
-              History(),
+              const History(),
               Profile(userData: UserService.instance.user),
             ],
           ),
@@ -74,24 +75,24 @@ class _NavigationState extends State<Navigation> {
             );
           });
         },
-        items: const[
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home,),
-            label: "Home",
+            icon: const Icon(Icons.home,),
+            label: AppLocalizations.of(context)!.home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.compass, ),
-            label: "Discover",
+            icon: const Icon(CupertinoIcons.compass, ),
+            label: AppLocalizations.of(context)!.discover,
     
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history, ),
-            label: "History",
+            icon: const Icon(Icons.history, ),
+            label: AppLocalizations.of(context)!.history,
     
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, ),
-            label: "Profile",
+            icon: const Icon(Icons.person, ),
+            label: AppLocalizations.of(context)!.profile,
     
           ),
         ],

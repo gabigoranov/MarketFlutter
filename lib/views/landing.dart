@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market/views/login_form.dart';
 import 'package:market/views/register_form.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
@@ -42,7 +43,7 @@ class Landing extends StatelessWidget {
                           shadowColor: Colors.black,
                           elevation: 4.0,
                         ),
-                        child: Text("Log In", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                        child: Text(AppLocalizations.of(context)!.login, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                       ),
                     ),
                     Padding(
@@ -61,7 +62,7 @@ class Landing extends StatelessWidget {
                           shadowColor: Colors.black,
                           elevation: 4.0,
                         ),
-                        child: Text("Register", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
+                        child: Text(AppLocalizations.of(context)!.register, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24),),
                       ),
                     ),
 

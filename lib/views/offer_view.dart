@@ -11,6 +11,7 @@ import 'package:market/models/user.dart';
 import 'package:market/views/navigation.dart';
 import 'package:market/views/offer_reviews_view.dart';
 import 'package:market/views/purchase_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OfferView extends StatelessWidget {
   final Offer offer;
@@ -106,7 +107,7 @@ class OfferView extends StatelessWidget {
                                           Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(builder: (context){
-                                              return Navigation(index: 0,);
+                                              return const Navigation(index: 0,);
                                             }),
                                             ModalRoute.withName('/'),
                                           );
@@ -158,9 +159,9 @@ class OfferView extends StatelessWidget {
                                       shadowColor: Colors.black,
                                       elevation: 4.0,
                                     ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 12),
-                                      child: Text("Order Now", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      child: Text(AppLocalizations.of(context)!.order_now, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),),
                                     ),
                                   ),
                                   const SizedBox(width: 16,),

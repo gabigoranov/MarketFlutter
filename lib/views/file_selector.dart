@@ -50,24 +50,24 @@ class _ImageCaptureState extends State<ImageCapture> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          TextButton(
-            child: const Text("Upload"),
-            onPressed: () async {
-              if(imagePath == "profiles"){
-                await uploadProfileImage();
-              }
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context){
-                  return Navigation(index: 0,);
-                }),
-                ModalRoute.withName('/'),
-              );
-            },
-          ),
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+              child: const Text("Upload"),
+              onPressed: () async {
+                if(imagePath == "profiles"){
+                  await uploadProfileImage();
+                }
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context){
+                    return const Navigation(index: 0,);
+                  }),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
