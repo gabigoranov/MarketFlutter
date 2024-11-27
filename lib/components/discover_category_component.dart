@@ -5,6 +5,7 @@ import '../views/navigation.dart';
 
 class DiscoverCategoryComponent extends StatelessWidget {
   final String title;
+  final String value;
   final String imgURL;
   final int color;
 
@@ -12,7 +13,7 @@ class DiscoverCategoryComponent extends StatelessWidget {
       {super.key,
       required this.title,
       required this.imgURL,
-      required this.color});
+      required this.color, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class DiscoverCategoryComponent extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
                     child: SafeArea(
                         child: DiscoverBody(
-                          category: title,
+                          category: value,
                         )
                     ),
                   )

@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:market/views/landing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/locale_provider.dart';
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
 
@@ -135,6 +138,19 @@ class _OnboardingState extends State<Onboarding> {
                         });
                       },
                       child: const Text("Back"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          if(AppLocalizations.of(context)!.language == "English"){
+                            context.read<LocaleProvider>().changeLocale('bg');
+                          }
+                          else{
+                            context.read<LocaleProvider>().changeLocale('en');
+                          }
+                        });
+                      },
+                      child: Text(AppLocalizations.of(context)!.change_lang),
                     ),
                     TextButton(
                       onPressed: () {

@@ -19,25 +19,10 @@ class _HistoryState extends State<History> {
 
   List<HistoryOrderComponent> widgets = [];
 
-  void listenForUpdate(){
-    FirebaseMessaging.onMessage.listen((message) {
-      //print('Foreground notification: ${message.notification?.title}');
-      setState(() {
-        orders = PurchaseService.instance.getPurchases();
-        widgets = [];
-        for(int i = 0; i < orders.length; i++){
-          widgets.add(HistoryOrderComponent(order: orders[i]));
-        }
-        NotificationService.handleMessage(message);
-      });
-    });
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    listenForUpdate();
 
     for(int i = 0; i < orders.length; i++){
       widgets.add(HistoryOrderComponent(order: orders[i]));

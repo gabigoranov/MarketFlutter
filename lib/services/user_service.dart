@@ -29,7 +29,7 @@ final class UserService {
     Response<dynamic> response = await dio.get(url);
 
     User user =  User.fromJson(response.data);
-    if(user.isSeller){
+    if(user.discriminator != 0){
       throw FormatException();
     }
 

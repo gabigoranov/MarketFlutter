@@ -34,6 +34,7 @@ final class OfferService {
   }
 
   Future<void> loadOffers() async{
+    loadedOffers = [];
     String url = 'https://farmers-api.runasp.net/api/Offers/getAll';
     Response<dynamic> response = await dio.get(url);
     for(int i = 0; i < response.data.length; i++){

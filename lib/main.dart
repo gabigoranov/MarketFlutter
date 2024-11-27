@@ -4,8 +4,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:market/providers/image_provider.dart';
 import 'package:market/services/authentication_wrapper.dart';
-import 'package:market/services/locale_provider.dart';
+import 'package:market/providers/locale_provider.dart';
+import 'package:market/providers/notification_provider.dart';
 import 'package:market/services/notification_service.dart';
 import 'package:market/services/offer_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,7 +42,11 @@ void main() async {
 
   NotificationService.initialize();
 
-
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Message received while in foreground: ${message.notification?.title}');
+    NotificationService.handleMessage(message);
+    // Show a custom in-app notification
+  });
 
   FirebaseMessaging.onMessageOpenedApp.listen((message) {
     print('Notification clicked: ${message.notification?.title}');
@@ -55,12 +62,16 @@ void main() async {
     }
   });
 
-
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => LocaleProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => ImageFileProvider()),
+      ],
       child: MyApp(),
-    ),
+    )
+
   );
 }
 
@@ -106,6 +117,7 @@ class _MyAppState extends State<MyApp> {
     for (var url in imageUrls) {
       precacheImage(AssetImage(url), context);
     }
+
     return Consumer<LocaleProvider>(
       builder: (context, localeProvider, child) {
         return MaterialApp(

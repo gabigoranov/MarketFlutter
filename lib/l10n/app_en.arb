@@ -59,7 +59,7 @@
   "@onboarding_3_title": {
     "description": "Text used in onboarding"
   },
-  "onboarding_1_description": "Sign up on our website, take advantage of our tools for sellers and start selling your produce today!",
+  "onboarding_1_description": "Easily order from anywhere",
   "@onboarding_1_description": {
     "description": "Text used in onboarding description"
   },
@@ -67,7 +67,7 @@
   "@onboarding_2_description": {
     "description": "Text used in onboarding description"
   },
-  "onboarding_3_description": "Easily order from anywhere",
+  "onboarding_3_description": "Sign up on our website, take advantage of our tools for sellers and start selling your produce today!",
   "@onboarding_3_description": {
     "description": "Text used in onboarding description"
   },

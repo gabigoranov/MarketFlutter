@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:market/components/cart-component.dart';
 import 'package:market/models/purchase.dart';
 import 'package:market/services/cart-service.dart';
+import 'package:market/providers/notification_provider.dart';
 import 'package:market/services/purchase-service.dart';
 import 'package:market/services/user_service.dart';
+import 'package:provider/provider.dart';
 import '../models/order.dart';
 import 'loading.dart';
 
@@ -173,6 +175,8 @@ class _PurchaseFormState extends State<PurchaseForm> {
                     }
                     Purchase purchase = Purchase(buyerId: UserService.instance.user.id, price: items.map((e) => e.price).sum, address: _addressController.text, orders: items);
                     await PurchaseService.instance.purchase(purchase);
+                    NotificationProvider provider = Provider.of<NotificationProvider>(context, listen: false);
+
                     Navigator.pop(
                       context,
                     );

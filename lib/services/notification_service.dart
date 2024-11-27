@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:market/providers/notification_provider.dart';
 import 'package:market/services/user_service.dart';
 
 class NotificationService {
@@ -43,9 +44,10 @@ class NotificationService {
       message.notification?.title ?? 'No Title',
       message.notification?.body ?? 'No Body',
     );
-
     if(message.data["type"] == "orderUpdate"){
       UserService.instance.reload();
+      print("YES");
+      NotificationProvider.instance.updateOrder(int.parse(message.data["id"]), message.data["status"], );
     }
   }
 }

@@ -22,12 +22,6 @@ class PurchaseView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _quantityController = TextEditingController();
 
-  String generateTitle(double quantity, Offer offer){
-    User user = UserService.instance.user;
-    String res = "${user.firstName} ordered ${quantity}KG of ${offer.title}";
-    return res;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,9 +68,8 @@ class PurchaseView extends StatelessWidget {
                                 if (_formKey.currentState!.validate()) {
                                   model.quantity = double.parse(_quantityController.value.text);
                                   model.price = double.parse((model.quantity*offer.pricePerKG).toStringAsFixed(2));
-                                  model.offerTypeId = offer.offerTypeId;
                                   model.offer = offer;
-                                  model.title = generateTitle(model.quantity, offer);
+                                  model.title = offer.title;
                                   await CartService.instance.add(model);
                                   Navigator.pop(context);
                                 }

@@ -76,13 +76,13 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                       const SizedBox(height: 20,),
-                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.vegetables, imgURL: "assets/discover-vegetables.jpg", color: 0xff26D156),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.vegetables, value: "Vegetables", imgURL: "assets/discover-vegetables.jpg", color: 0xff26D156),
                       const SizedBox(height: 10,),
-                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.fruits, imgURL: "assets/discover-fruits.jpg", color: 0xffF13A3A),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.fruits, value: "Fruits", imgURL: "assets/discover-fruits.jpg", color: 0xffF13A3A),
                       const SizedBox(height: 10,),
-                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.dairy, imgURL: "assets/discover-dairy.jpg", color: 0xff56A8E4),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.dairy, value: "Dairy", imgURL: "assets/discover-dairy.jpg", color: 0xff56A8E4),
                       const SizedBox(height: 10,),
-                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.meat, imgURL: "assets/discover-meat.jpg", color: 0xffFFFAA8),
+                      DiscoverCategoryComponent(title: AppLocalizations.of(context)!.meat, value: "Meat", imgURL: "assets/discover-meat.jpg", color: 0xffFFFAA8),
                       //tags
                       const SizedBox(height: 30,),
 

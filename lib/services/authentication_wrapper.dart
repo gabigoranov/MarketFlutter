@@ -13,6 +13,7 @@ import 'package:market/views/navigation.dart';
 import 'package:market/views/onboarding.dart';
 
 import '../models/order.dart';
+import 'offer_service.dart';
 
 const storage = FlutterSecureStorage();
 
@@ -36,6 +37,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     List<dynamic> jsonData = jsonDecode(cartRead);
     List<Order> items = jsonData.map((orderJson) => Order.fromStorageJson(orderJson)).toList();
     CartService.instance.cart = items;
+    OfferService.instance.loadOffers();
 
     FirebaseService.instance.setupToken();
 
@@ -52,6 +54,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
         else if(isAuthenticated){
           return const Navigation(index: 0,);
         }
+
         return const Onboarding();
       },
     );

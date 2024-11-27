@@ -120,7 +120,11 @@ class _OfferReviewsViewState extends State<OfferReviewsView> {
                                     widget.reviews = OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).reviews!;
                                     OfferService.instance.loadedOffers.singleWhere((x) => x.id == offerId).avgRating = widget.reviews.length > 1 ? widget.reviews.map((m) => m.rating).reduce((a, b) => a + b) / widget.reviews.length : widget.reviews[0].rating;
                                     OfferService.instance.getData();
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) { return const Navigation(index: 1, text: null);}));
+                                    Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return const Navigation(index: 1);
+                                      }), (Route<dynamic> route) => false,
+                                    );
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(

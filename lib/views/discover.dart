@@ -29,7 +29,8 @@ class _DiscoverBodyState extends State<DiscoverBody> {
   List<Widget> offers = [];
   bool isLoading = false;
 
-  void reloadWidgets() {
+  Future<void> reloadWidgets() async {
+
     setState(() {
       if(widget.category != null){
         offers = OfferService.instance.loadedOffers.where((x) => x.stock.offerType.category == widget.category).map((element) => OfferComponent(offer: element)).toList();
@@ -43,7 +44,6 @@ class _DiscoverBodyState extends State<DiscoverBody> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     reloadWidgets();
     if(widget.text != null){
@@ -54,59 +54,62 @@ class _DiscoverBodyState extends State<DiscoverBody> {
   @override
   Widget build(BuildContext context) {
 
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0),
-        child: Column(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.9,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width*0.75,
-                    child: Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                          hintText: widget.text ?? AppLocalizations.of(context)!.search,
-                          contentPadding: const EdgeInsets.all(12.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: Colors.white, width: 3.0),
+    return SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0),
+          child: Column(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width*0.9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width*0.75,
+                      child: Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          controller: searchController,
+                          decoration: InputDecoration(
+                            hintText: widget.text ?? AppLocalizations.of(context)!.search,
+                            contentPadding: const EdgeInsets.all(12.0),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: const BorderSide(color: Colors.white, width: 3.0),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () async{
-                      String input = searchController.value.text;
-                      await search(input);
-
-                    },
-                    icon: const Icon(CupertinoIcons.search),
-                  )
-                ],
+                    IconButton(
+                      onPressed: () async{
+                        if(isLoading) return;
+                        String input = searchController.value.text;
+                        await search(input);
+      
+                      },
+                      icon: const Icon(CupertinoIcons.search),
+                    )
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 22,),
-            isLoading
-            ? const Expanded(child: Center(child: CircularProgressIndicator()))
-            : Column(
-              children: offers.isNotEmpty ? List<Widget>.generate(
-                  offers.length * 2 - 1, (index) {
-                    if (index.isEven) {
-                      return offers[index ~/ 2];
-                    } else {
-                      return const SizedBox(height: 8);
+              const SizedBox(height: 22,),
+              isLoading
+              ? const Expanded(child: Center(child: CircularProgressIndicator()))
+              : Column(
+                children: offers.isNotEmpty ? List<Widget>.generate(
+                    offers.length * 2 - 1, (index) {
+                      if (index.isEven) {
+                        return offers[index ~/ 2];
+                      } else {
+                        return const SizedBox(height: 8);
+                      }
                     }
-                  }
-              ) : [],
-            ),
-          ],
+                ) : [],
+              ),
+            ],
+          ),
         ),
       ),
     );

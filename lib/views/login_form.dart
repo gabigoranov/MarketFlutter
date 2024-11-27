@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -5,6 +7,11 @@ import 'package:market/services/user_service.dart';
 import 'package:market/views/loading.dart';
 import 'package:market/views/navigation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../models/order.dart';
+import '../services/authentication_wrapper.dart';
+import '../services/cart-service.dart';
+import '../services/firebase_service.dart';
 final dio = Dio();
 final storage = FlutterSecureStorage();
 
@@ -24,9 +31,10 @@ class _LoginFormState extends State<LoginForm>{
 
     try{
       await UserService.instance.login(email, password);
+
       Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context){
-          return Navigation(index: 0,);
+          return const AuthenticationWrapper();
         }), (Route<dynamic> route) => false,
       );
     }
@@ -51,7 +59,6 @@ class _LoginFormState extends State<LoginForm>{
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-    final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
 
     return Scaffold(
       appBar: AppBar(

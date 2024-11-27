@@ -12,16 +12,15 @@ class User{
   String phoneNumber;
   String password;
   String description;
-  double rating;
   String town;
-  bool isSeller;
+  int discriminator;
   List<Purchase> boughtOrders;
 
   // Constructor
   User({required this.id, required this.firstName, required this.lastName,
-        required this.age, required this.email, this.rating = 0,
+        required this.age, required this.email,
         required this.phoneNumber, required this.password, required this.description,
-        required this.town, required this.isSeller, required this.boughtOrders});
+        required this.town, required this.discriminator, required this.boughtOrders});
 
   // Factory constructor to create a User instance from a JSON map
   factory User.fromJson(Map<String, dynamic> json) {
@@ -37,12 +36,11 @@ class User{
       lastName: json['lastName'] as String,
       age: json['age'] as int,
       email: json['email'] as String,
-      rating: json['rating']+.0 as double,
       phoneNumber: json['phoneNumber'] as String,
       password: json['password'] as String,
       description: json['description'] as String,
       town: json['town'] as String,
-      isSeller: json['isSeller'] as bool,
+      discriminator: json['discriminator'] as int,
       boughtOrders: converted,
     );
     return res;
@@ -56,12 +54,11 @@ class User{
       'lastName': lastName,
       'age': age,
       'email': email,
-      'rating': rating,
       'phoneNumber': phoneNumber,
       'password': password,
       'description': description,
       'town': town,
-      'isSeller': isSeller,
+      'discriminator': discriminator,
     };
   }
 }
